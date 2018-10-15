@@ -43,6 +43,24 @@ public class QuestNodeWindow : EditorWindow
         CheckMouse(Event.current);
         if (GUILayout.Button("Create Node", GUILayout.Width(toolbarHeight), GUILayout.Height(30)))
             AddNode();
+        BeginWindows();
+        var oricol = GUI.backgroundColor;
+        for (int i = 0; i < allNodes.Count; i++)
+        {
+            foreach (var c in allNodes[i].Connected)
+            {
+                Handles.DrawLine(new Vector2(allNodes[i].rect.position.x + allNodes[i].rect.width / 2f, allNodes[i].rect.position.y + allNodes[i].rect.height / 2f), new Vector2(c.rect.width / 2f, c.rect.position.y + c.rect.height / 2f));
+            }
+        }
+        for (int i = 0; i < allNodes.Count; i++)
+        {
+            if (allNodes[i] == _SelectedNode)
+                GUI.backgroundColor = Color.black;
+            allNodes[i].rect = GUI.Window(i, allNodes[i].rect, Drawnode, allNodes[i].NodeName);
+            GUI.backgroundColor = oricol;
+        }
+        EndWindows();
+        
     }
     private void CheckMouse(Event E)
     {
@@ -67,6 +85,7 @@ public class QuestNodeWindow : EditorWindow
             Repaint();
         }
         Node overNode = null;
+
         for (int i = 0; i < allNodes.Count; i++)
         {
             allNodes[i].CheckMouse(Event.current, graphpan);
@@ -88,8 +107,9 @@ public class QuestNodeWindow : EditorWindow
     }
     private void AddNode()
     {
-        allNodes.Add(new Node(0, 0, 200, 150, CurrentName));
         CurrentName = "hola";
+        allNodes.Add(new Node(0, 0, 200, 150, CurrentName));
+        
         Repaint();
     }
     private void Drawnode(int id)
