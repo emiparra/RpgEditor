@@ -77,10 +77,14 @@ public class QuestNodeWindow : EditorWindow
         GUI.EndGroup();
         
     }
+
+    
+
     private void CheckMouse(Event currentE)
     {
         if (!graphrect.Contains(currentE.mousePosition) || !(focusedWindow == this) || mouseOverWindow == this)
             return;
+
         if (currentE.button == 2 && currentE.type == EventType.MouseDown)
         {
             panninscreen = true;
@@ -116,6 +120,15 @@ public class QuestNodeWindow : EditorWindow
             if (prevsel != _SelectedNode)
                 Repaint();
         }
+        if (currentE.button == 1 && currentE.type == EventType.MouseDown)
+            ContextMenu();
+
+    }
+    private void ContextMenu()
+    {
+        GenericMenu GenericMenu = new GenericMenu();
+        GenericMenu.AddItem(new GUIContent("Add Node"), false, AddNode);
+        GenericMenu.ShowAsContext();
 
     }
   
@@ -138,7 +151,7 @@ public class QuestNodeWindow : EditorWindow
             
             allNodes.RemoveAt(id);
            
-
+           
         }
         if(!panninscreen)
         {
