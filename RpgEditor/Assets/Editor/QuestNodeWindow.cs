@@ -52,8 +52,9 @@ public class QuestNodeWindow : EditorWindow
             }
             else
             { 
-            AddNode();
-            Nname = GUILayout.TextField("");
+        
+                AddNode();
+          
             }
         }
         
@@ -66,6 +67,7 @@ public class QuestNodeWindow : EditorWindow
         GUI.BeginGroup(graphrect);
         BeginWindows();
         var col = GUI.backgroundColor;
+      
         for (int i = 0; i < allNodes.Count; i++)
         {
             if (allNodes[i] == _SelectedNode)
@@ -73,18 +75,28 @@ public class QuestNodeWindow : EditorWindow
             allNodes[i].rect = GUI.Window(i, allNodes[i].rect, Drawnode, allNodes[i].NodeName);
             GUI.backgroundColor = col;
         }
+        
         EndWindows();
         GUI.EndGroup();
         
     }
-
+    
     
 
     private void CheckMouse(Event currentE)
     {
+        if (currentE.button == 1 && currentE.type == EventType.MouseDown && graphrect.Contains(currentE.mousePosition))
+        {
+            Debug.Log("tumama");
+            ContextMenu();
+
+
+        }
+
         if (!graphrect.Contains(currentE.mousePosition) || !(focusedWindow == this) || mouseOverWindow == this)
             return;
-
+       
+       
         if (currentE.button == 2 && currentE.type == EventType.MouseDown)
         {
             panninscreen = true;
@@ -115,13 +127,13 @@ public class QuestNodeWindow : EditorWindow
         {
             if (overnode != null)
                 _SelectedNode = overnode;
+
             else
                 _SelectedNode = null;
             if (prevsel != _SelectedNode)
                 Repaint();
         }
-        if (currentE.button == 1 && currentE.type == EventType.MouseDown)
-            ContextMenu();
+       
 
     }
     private void ContextMenu()
@@ -129,6 +141,7 @@ public class QuestNodeWindow : EditorWindow
         GenericMenu GenericMenu = new GenericMenu();
         GenericMenu.AddItem(new GUIContent("Add Node"), false, AddNode);
         GenericMenu.ShowAsContext();
+       
 
     }
   
@@ -155,6 +168,7 @@ public class QuestNodeWindow : EditorWindow
         }
         if(!panninscreen)
         {
+          
             GUI.DragWindow();
             if (!allNodes[id].OverNode) return;
             if (allNodes[id].rect.x < 0)
