@@ -9,10 +9,10 @@ public class QuestNodeWindow : EditorWindow
     private List<Node> allNodes;
     private GUIStyle style;
     private string CurrentName;
-    private float toolbarHeight = 50;
+    private float toolbarHeight = 20;
     private Node _SelectedNode;
     string Nname;
-
+   
 
     private Vector2 Graphpan;
     private Rect graphrect;
@@ -34,31 +34,15 @@ public class QuestNodeWindow : EditorWindow
 
         Nodewindow.Graphpan = new Vector2(0, Nodewindow.toolbarHeight);
         Nodewindow.graphrect = new Rect(0, Nodewindow.toolbarHeight, 100000, 100000);
-
+        
      
     }
 
     private void OnGUI()
     {
-        EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField("Node Name");
-        Nname= GUILayout.TextField(Nname);
-        
-        if (GUILayout.Button("Create Node", GUILayout.Width(toolbarHeight+50), GUILayout.Height(30)))
-        {
-            if(Nname == "")
-            {
-                Debug.Log("error, no hay nombre");
-            }
-            else
-            { 
-        
-                AddNode();
-          
-            }
-        }
-        
-        EditorGUILayout.EndHorizontal();
+        CheckMouse(Event.current);
+
+     
 
         graphrect.x = Graphpan.x;
         graphrect.y = Graphpan.y;
@@ -66,6 +50,7 @@ public class QuestNodeWindow : EditorWindow
 
         GUI.BeginGroup(graphrect);
         BeginWindows();
+
         var col = GUI.backgroundColor;
       
         for (int i = 0; i < allNodes.Count; i++)
@@ -85,57 +70,22 @@ public class QuestNodeWindow : EditorWindow
 
     private void CheckMouse(Event currentE)
     {
+     
         if (currentE.button == 1 && currentE.type == EventType.MouseDown && graphrect.Contains(currentE.mousePosition))
-        {
-            Debug.Log("tumama");
             ContextMenu();
 
+        
+        
 
-        }
-
-        if (!graphrect.Contains(currentE.mousePosition) || !(focusedWindow == this) || mouseOverWindow == this)
-            return;
+        
        
-       
-        if (currentE.button == 2 && currentE.type == EventType.MouseDown)
-        {
-            panninscreen = true;
-            prevPan = new Vector2(Graphpan.x, Graphpan.y);
-            OriginalMousePosition = currentE.mousePosition;
-        }
-        else if (currentE.button == 2 && currentE.type == EventType.MouseUp)
-            panninscreen = false;
-        if(panninscreen)
-        {
-            var newX = prevPan.x + currentE.mousePosition.x - OriginalMousePosition.x;
-            Graphpan.x = newX > 0 ? 0 : newX;
 
-            var newY = prevPan.y + currentE.mousePosition.y - OriginalMousePosition.y;
-            Graphpan.y = newY > toolbarHeight ? toolbarHeight : newY;
-            Repaint();
-        }
+      
 
-        Node overnode = null;
-        for (int i = 0; i < allNodes.Count; i++)
-        {
-            allNodes[i].CheckMouse(Event.current, Graphpan);
-            if (allNodes[i].OverNode)
-                overnode = allNodes[i];
-        }
-        var prevsel = _SelectedNode;
-        if(currentE.button==0 && currentE.type== EventType.MouseDown)
-        {
-            if (overnode != null)
-                _SelectedNode = overnode;
-
-            else
-                _SelectedNode = null;
-            if (prevsel != _SelectedNode)
-                Repaint();
-        }
-       
+        
 
     }
+ 
     private void ContextMenu()
     {
         GenericMenu GenericMenu = new GenericMenu();
@@ -159,13 +109,7 @@ public class QuestNodeWindow : EditorWindow
         EditorGUILayout.LabelField("Quest:", GUILayout.Width(50));
         Node.Quest = (GameObject)EditorGUILayout.ObjectField(Node.Quest,typeof(GameObject),false);
         EditorGUILayout.EndHorizontal();
-        if (GUILayout.Button("Delete", GUILayout.Width(toolbarHeight), GUILayout.Height(30)))
-        {
-            
-            allNodes.RemoveAt(id);
-           
-           
-        }
+      
         if(!panninscreen)
         {
           
@@ -175,7 +119,7 @@ public class QuestNodeWindow : EditorWindow
                 allNodes[id].rect.x = 0;
             if (allNodes[id].rect.y < toolbarHeight - Graphpan.y)
                 allNodes[id].rect.y = toolbarHeight - Graphpan.y;
-                    }
+        }
            
             
 
