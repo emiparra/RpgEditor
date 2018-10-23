@@ -11,6 +11,7 @@ public class Node
     public bool complete;
     public List<Node> Connected;
 
+    
     public Node(float x, float y, float width, float height, string name)
     {
         rect = new Rect(x, y, width, height);
