@@ -6,7 +6,7 @@ public class Node
  {
     public Rect rect;
     public string NodeName;
-    public static GameObject Quest;
+    public  GameObject Quest;
     private bool _overnode;
     public bool complete;
     public List<Node> Connected;
@@ -23,6 +23,7 @@ public class Node
     {
         if (rect.Contains(cE.mousePosition - pan))
             _overnode = true;
+
         else
             _overnode = false;
     }

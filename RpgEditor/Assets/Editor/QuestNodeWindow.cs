@@ -58,13 +58,19 @@ public class QuestNodeWindow : EditorWindow
 
         for (int i = 0; i < allNodes.Count; i++)
         {
-            if (allNodes[i] == _SelectedNode)
+           
+
+            if(allNodes[i].complete == false && allNodes[i] != _SelectedNode)
                 GUI.backgroundColor = Color.red;
+           else if (allNodes[i].complete == true && allNodes[i] != _SelectedNode)
+                GUI.backgroundColor = Color.red;
+            if (allNodes[i] == _SelectedNode)
+                GUI.backgroundColor = Color.blue;
 
             allNodes[i].rect = GUI.Window(i, allNodes[i].rect, Drawnode, allNodes[i].NodeName);
             GUI.backgroundColor = col;
         }
-
+        //
         EndWindows();
         GUI.EndGroup();
         
@@ -150,16 +156,26 @@ public class QuestNodeWindow : EditorWindow
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("Quest:", GUILayout.Width(50));
 
-        Node.Quest = (GameObject)EditorGUILayout.ObjectField(Node.Quest,typeof(GameObject),false);
-        
-      
+        allNodes[id].Quest = (GameObject)EditorGUILayout.ObjectField(allNodes[id].Quest, typeof(GameObject), false);
+
+
 
         EditorGUILayout.EndHorizontal();
-        if (Node.Quest != null)
+        if (allNodes[id].Quest != null)
         {
+
+            allNodes[id].complete = EditorGUILayout.Toggle("COMPLETED", allNodes[id].complete);
             
-            allNodes[id].complete = EditorGUILayout.Toggle("complete",allNodes[id].complete);
-            
+            if(allNodes[id].complete == true)
+            {
+
+                Debug.Log("estrue man");
+            }
+            else
+            {
+
+                Debug.Log("noooo");
+            }
              
         }
 
