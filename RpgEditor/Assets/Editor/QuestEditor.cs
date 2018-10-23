@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System;
+using System.IO;
 
 [CustomEditor(typeof(Quest))]
 public class QuestEditor : Editor {
@@ -11,6 +12,7 @@ public class QuestEditor : Editor {
     private GUIStyle _titlesLabelField;
     private GUIStyle _wrap;
     private Vector2 _scrollDesc;
+  
 
     private void OnEnable()
     {
@@ -18,8 +20,12 @@ public class QuestEditor : Editor {
         _titlesLabelField = new GUIStyle();
         _titlesLabelField.fontSize = 20;
         _wrap = new GUIStyle(EditorStyles.textField);
-        _wrap.wordWrap = true; 
+        _wrap.wordWrap = true;
+
+
+           
         
+
     }
 
     public override void OnInspectorGUI()
@@ -27,7 +33,8 @@ public class QuestEditor : Editor {
         QuestTitleAndDescription();
         Requirements();
         Bounties();
-        SaveQuest(); 
+        SaveQuest();
+        
     }
 
 
@@ -57,7 +64,6 @@ public class QuestEditor : Editor {
         _quest.experienceGained = EditorGUILayout.IntField("Experiencia", _quest.experienceGained);
         _quest.creditsGained = EditorGUILayout.IntField("Creditos   ", _quest.creditsGained);
         GUILayout.Space(10);
-
     }
 
 
@@ -66,9 +72,9 @@ public class QuestEditor : Editor {
     {
         EditorGUILayout.LabelField("Requisitos:", _titlesLabelField);
         GUILayout.Space(10);
-        _quest.reqLvl = EditorGUILayout.IntField("Nivel Requerido",_quest.reqLvl);
-        _quest.reqItem = (GameObject)EditorGUILayout.ObjectField("Objeto Necesario", _quest.reqItem, typeof(GameObject), true);
-        _quest.reqKnows = EditorGUILayout.TextField("Conocer a", _quest.reqKnows);
+        _quest.reqLvl = EditorGUILayout.IntField("Nivel Necesario", _quest.reqLvl);
+        _quest.reqItem = (GameObject)EditorGUILayout.ObjectField("Objeto Necesario",_quest.reqItem,typeof(GameObject),true);
+        _quest.reqKnows = EditorGUILayout.TextField("Conocer a",_quest.reqKnows);
     }
 
     #region Guardar Mision
@@ -102,8 +108,22 @@ public class QuestEditor : Editor {
     }
     void CreatePrefab(string path)
     {
+        _quest.json = JsonUtility.ToJson(_quest);
+        Debug.Log(_quest.json);
         var prefab = PrefabUtility.CreatePrefab(path, _quest.gameObject);
         PrefabUtility.ReplacePrefab(_quest.gameObject, prefab, ReplacePrefabOptions.ConnectToPrefab);
+        Clear();
+    }
+
+    void Clear()
+    {
+        _quest.questTitle = "Hola buenas tardes";
+        _quest.questDescription = "";
+        _quest.reqLvl = 0;
+        _quest.reqItem = null;
+        _quest.reqKnows = "";
+        _quest.experienceGained = 0;
+        _quest.creditsGained = 0;
     }
     #endregion
 
