@@ -11,6 +11,7 @@ public class Quest : MonoBehaviour
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     public bool previousQuest;
     public int reqLvl;
     /*public GameObject[] reqItems;
@@ -22,6 +23,10 @@ public class Quest : MonoBehaviour
 >>>>>>> 51afc1412263611d3105b117e2f64f37efaf8549
 
    
+=======
+
+   //
+>>>>>>> 75825eaee14f1e8ab783b8e2c796676946a7811c
 =======
 
    //
