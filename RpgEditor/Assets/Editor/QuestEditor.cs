@@ -57,6 +57,7 @@ public class QuestEditor : Editor {
         _quest.experienceGained = EditorGUILayout.IntField("Experiencia", _quest.experienceGained);
         _quest.creditsGained = EditorGUILayout.IntField("Creditos   ", _quest.creditsGained);
         GUILayout.Space(10);
+
     }
 
 
