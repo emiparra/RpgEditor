@@ -11,6 +11,8 @@ public class Quest : MonoBehaviour
   
     public bool previousQuest;
     public int reqLvl;
+    public GameObject reqItem;
+    public string reqKnows;
     /*public GameObject[] reqItems;
     public string[] reqKnows;*/
 	
