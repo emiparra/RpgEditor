@@ -55,7 +55,8 @@ MonoBehaviour:
   questDescription: 
   experienceGained: 0
   creditsGained: 0
-  previousQuest: 0
+  showQuest: 0
   reqLvl: 0
   reqItem: {fileID: 0}
   reqKnows: 
+  json: 

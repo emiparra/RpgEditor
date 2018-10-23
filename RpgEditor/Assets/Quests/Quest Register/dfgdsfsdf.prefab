@@ -55,7 +55,8 @@ MonoBehaviour:
   questDescription: df
   experienceGained: 11
   creditsGained: 1
-  previousQuest: 0
+  showQuest: 0
   reqLvl: 1
   reqItem: {fileID: 0}
   reqKnows: 
+  json: 
