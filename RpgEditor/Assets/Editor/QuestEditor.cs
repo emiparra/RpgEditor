@@ -8,34 +8,74 @@ using System;
 public class QuestEditor : Editor {
 
     private Quest _quest;
+    private GUIStyle _titlesLabelField;
+    private GUIStyle _wrap;
+    private Vector2 _scrollDesc;
 
     private void OnEnable()
     {
         _quest = (Quest)target;
+        _titlesLabelField = new GUIStyle();
+        _titlesLabelField.fontSize = 20;
+        _wrap = new GUIStyle(EditorStyles.textField);
+        _wrap.wordWrap = true; 
         
     }
 
     public override void OnInspectorGUI()
     {
-        EditorGUILayout.LabelField("Titulo de la mision");
+        QuestTitleAndDescription();
+        Requirements();
+        Bounties();
+        SaveQuest(); 
+    }
+
+
+    void QuestTitleAndDescription()
+    {
+        EditorGUILayout.LabelField("Titulo de la misión", _titlesLabelField);
+        GUILayout.Space(10);
         _quest.questTitle = EditorGUILayout.TextField(_quest.questTitle);
         target.name = _quest.questTitle;
-        EditorGUILayout.LabelField("Descripcion de la mision");
+        EditorGUILayout.LabelField("Descripción:", _titlesLabelField);
+        GUILayout.Space(10);
+       // _scrollDesc = EditorGUILayout.BeginScrollView(_scrollDesc,GUILayout.Width(200),GUILayout.Height(100));
         _quest.questDescription = EditorGUILayout.TextField(_quest.questDescription,
+            _wrap,
             GUILayout.Height(100),
             GUILayout.Width(200),
             GUILayout.ExpandWidth(false));
-        EditorGUILayout.LabelField("Recompensas:");
-        _quest.experienceGained = EditorGUILayout.IntField("Experiencia",_quest.experienceGained);
+        //EditorGUILayout.EndScrollView();
+    }
+
+
+
+    void Bounties()
+    {
+        EditorGUILayout.LabelField("Recompensas:", _titlesLabelField);
+        GUILayout.Space(10);
+        _quest.experienceGained = EditorGUILayout.IntField("Experiencia", _quest.experienceGained);
         _quest.creditsGained = EditorGUILayout.IntField("Creditos   ", _quest.creditsGained);
         GUILayout.Space(10);
+    }
 
-        var saveButton = GUILayout.Button("Guardar");
-        if (saveButton) SavePrefab();
-        
+
+
+    void Requirements()
+    {
+        EditorGUILayout.LabelField("Requisitos:", _titlesLabelField);
+        GUILayout.Space(10);
+        _quest.reqLvl = EditorGUILayout.IntField("Nivel Requerido",_quest.reqLvl);
     }
 
     #region Guardar Mision
+
+
+    void SaveQuest()
+    {
+        var saveButton = GUILayout.Button("Guardar");
+        if (saveButton) SavePrefab();
+    }
 
     void SavePrefab()
     {

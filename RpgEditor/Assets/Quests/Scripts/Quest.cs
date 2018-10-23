@@ -9,7 +9,11 @@ public class Quest : MonoBehaviour
     public int experienceGained;
     public int creditsGained;
 
-   //
+    public bool previousQuest;
+    public int reqLvl;
+    /*public GameObject[] reqItems;
+    public string[] reqKnows;*/
+	
 
 
 
