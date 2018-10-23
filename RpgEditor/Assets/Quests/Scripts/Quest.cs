@@ -8,8 +8,8 @@ public class Quest : MonoBehaviour
     public string questDescription;
     public int experienceGained;
     public int creditsGained;
-	
 
+   
 
 
 

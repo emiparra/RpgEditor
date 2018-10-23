@@ -12,6 +12,7 @@ public class QuestNodeWindow : EditorWindow
     private float toolbarHeight = 20;
     private Node _SelectedNode;
     string Nname;
+    
    
 
     private Vector2 Graphpan;
@@ -41,8 +42,9 @@ public class QuestNodeWindow : EditorWindow
     private void OnGUI()
     {
         CheckMouse(Event.current);
-
-     
+        
+      
+      
 
         graphrect.x = Graphpan.x;
         graphrect.y = Graphpan.y;
@@ -52,13 +54,7 @@ public class QuestNodeWindow : EditorWindow
         BeginWindows();
 
         var col = GUI.backgroundColor;
-        for (int i = 0; i < allNodes.Count; i++)
-        {
-            foreach (var Q in allNodes[i].Connected)
-            {
-
-            }
-        }
+        
 
         for (int i = 0; i < allNodes.Count; i++)
         {
@@ -153,13 +149,15 @@ public class QuestNodeWindow : EditorWindow
     }
     private void Drawnode(int id)
     {
-       
+      
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("Quest:", GUILayout.Width(50));
         Node.Quest = (GameObject)EditorGUILayout.ObjectField(Node.Quest,typeof(GameObject),false);
+        
         EditorGUILayout.EndHorizontal();
       
-        if(!panninscreen)
+        
+        if (!panninscreen)
         {
           
             GUI.DragWindow();
