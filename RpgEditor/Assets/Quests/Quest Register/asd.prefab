@@ -55,3 +55,5 @@ MonoBehaviour:
   questDescription: 
   experienceGained: 0
   creditsGained: 0
+  previousQuest: 0
+  reqLvl: 0

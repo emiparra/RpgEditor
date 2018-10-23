@@ -104,10 +104,15 @@ public class QuestNodeWindow : EditorWindow
         Node overnode = null;
         for (int i = 0; i < allNodes.Count; i++)
         {
-            allNodes[i].CheckMouse(Event.current, Graphpan);
-            if (allNodes[i].OverNode)
-                overnode = allNodes[i];
 
+          
+           
+                allNodes[i].CheckMouse(Event.current, Graphpan);
+                if (allNodes[i].OverNode)
+                    overnode = allNodes[i];
+          
+
+          
         }
         var prev = _SelectedNode;
         if (currentE.button == 0 && currentE.type == EventType.MouseDown)
@@ -121,14 +126,6 @@ public class QuestNodeWindow : EditorWindow
                     
                     
                     }
-
-        
-       
-
-      
-
-        
-
     }
  
     private void ContextMenu()
@@ -152,11 +149,20 @@ public class QuestNodeWindow : EditorWindow
       
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("Quest:", GUILayout.Width(50));
+
         Node.Quest = (GameObject)EditorGUILayout.ObjectField(Node.Quest,typeof(GameObject),false);
         
-        EditorGUILayout.EndHorizontal();
       
-        
+
+        EditorGUILayout.EndHorizontal();
+        if (Node.Quest != null)
+        {
+            
+            allNodes[id].complete = EditorGUILayout.Toggle("complete",allNodes[id].complete);
+            
+             
+        }
+
         if (!panninscreen)
         {
           
@@ -167,9 +173,5 @@ public class QuestNodeWindow : EditorWindow
             if (allNodes[id].rect.y < toolbarHeight - Graphpan.y)
                 allNodes[id].rect.y = toolbarHeight - Graphpan.y;
         }
-           
-            
-
-      
     }
 }
