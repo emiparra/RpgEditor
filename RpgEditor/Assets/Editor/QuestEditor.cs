@@ -65,7 +65,7 @@ public class QuestEditor : Editor {
     {
         EditorGUILayout.LabelField("Requisitos:", _titlesLabelField);
         GUILayout.Space(10);
-        _quest.reqLvl = EditorGUILayout.IntField(_quest.reqLvl);
+        _quest.reqLvl = EditorGUILayout.IntField("Nivel Requerido",_quest.reqLvl);
     }
 
     #region Guardar Mision
