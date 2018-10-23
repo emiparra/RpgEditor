@@ -63,9 +63,9 @@ public class QuestNodeWindow : EditorWindow
             if(allNodes[i].complete == false && allNodes[i] != _SelectedNode)
                 GUI.backgroundColor = Color.red;
            else if (allNodes[i].complete == true && allNodes[i] != _SelectedNode)
-                GUI.backgroundColor = Color.red;
+                GUI.backgroundColor = Color.green;
             if (allNodes[i] == _SelectedNode)
-                GUI.backgroundColor = Color.blue;
+                GUI.backgroundColor = Color.grey;
 
             allNodes[i].rect = GUI.Window(i, allNodes[i].rect, Drawnode, allNodes[i].NodeName);
             GUI.backgroundColor = col;
@@ -145,7 +145,7 @@ public class QuestNodeWindow : EditorWindow
   
     private void AddNode()
     {
-        CurrentName = Nname;
+        CurrentName = "";
         allNodes.Add(new Node(0, 0, 150, 150, CurrentName));
         
         Repaint();
