@@ -161,10 +161,15 @@ public class QuestNodeWindow : EditorWindow
 
 
         EditorGUILayout.EndHorizontal();
+
+        
         if (allNodes[id].Quest != null)
         {
+            EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField("complete:", GUILayout.Width(70));
+            allNodes[id].complete = EditorGUILayout.Toggle (allNodes[id].complete);
 
-            allNodes[id].complete = EditorGUILayout.Toggle("COMPLETED", allNodes[id].complete);
+            EditorGUILayout.EndHorizontal();
             
             if(allNodes[id].complete == true)
             {
