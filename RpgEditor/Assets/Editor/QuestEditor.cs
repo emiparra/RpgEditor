@@ -45,9 +45,9 @@ public class QuestEditor : Editor {
         target.name = _quest.questTitle;
         EditorGUILayout.LabelField("Descripción:", _titlesLabelField);
         GUILayout.Space(10);
-        EditorGUILayout.BeginVertical(GUILayout.Height(100));
+        EditorGUILayout.BeginVertical();
        _scrollDesc = EditorGUILayout.BeginScrollView(_scrollDesc,GUILayout.Height(100));
-        _quest.questDescription = EditorGUILayout.TextField(_quest.questDescription,
+        _quest.questDescription = EditorGUILayout.TextArea(_quest.questDescription,
             _wrap,
             GUILayout.Height(100),
             GUILayout.Width(200),
