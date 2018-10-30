@@ -6,7 +6,7 @@ public class Node
  {
     public Rect rect;
     public string NodeName;
-    public  ScriptableObject Quest;
+    public  QuestData Quest;
     private bool _overnode;
     public bool complete;
     public List<Node> Connected;

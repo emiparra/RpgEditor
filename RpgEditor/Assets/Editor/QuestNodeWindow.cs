@@ -193,7 +193,7 @@ public class QuestNodeWindow : EditorWindow
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("Quest:", GUILayout.Width(50));
 
-        allNodes[id].Quest = (ScriptableObject)EditorGUILayout.ObjectField(allNodes[id].Quest, typeof(ScriptableObject), false);
+        allNodes[id].Quest = (QuestData)EditorGUILayout.ObjectField(allNodes[id].Quest, typeof(QuestData), false);
 
 
 

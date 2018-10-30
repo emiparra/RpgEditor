@@ -74,10 +74,10 @@ public class QuestEditor : Editor {
         EditorGUILayout.LabelField("Requisitos:", _titlesLabelField);
         GUILayout.Space(10);
         _quest.reqLvl = EditorGUILayout.IntField("Nivel Necesario", _quest.reqLvl);
-        _quest.reqItem = EditorGUILayout.TextField("Objeto Necesario", _quest.reqKnows);
+        _quest.reqItem = EditorGUILayout.TextField("Objeto Necesario", _quest.reqItem);
         _quest.reqKnows = EditorGUILayout.TextField("Conocer a", _quest.reqKnows);
-        _quest.reqExplore = EditorGUILayout.TextField("Haber explorado", _quest.reqKnows);
-        _quest.reqKills = EditorGUILayout.TextField("Haber matado a", _quest.reqKnows);
+        _quest.reqExplore = EditorGUILayout.TextField("Haber explorado", _quest.reqExplore);
+        _quest.reqKills = EditorGUILayout.TextField("Haber matado a", _quest.reqKills);
     }
 
  
