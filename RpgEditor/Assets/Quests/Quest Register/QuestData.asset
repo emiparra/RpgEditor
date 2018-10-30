@@ -17,5 +17,7 @@ MonoBehaviour:
   creditsGained: 0
   showQuest: 0
   reqLvl: 0
-  reqItem: {fileID: 0}
+  reqItem: 
   reqKnows: 
+  reqKills: 
+  reqExplore: 

@@ -33,7 +33,6 @@ public class QuestEditor : Editor {
         QuestTitleAndDescription();
         Requirements();
         Bounties();
-       // SaveQuest();
         
     }
 
@@ -46,13 +45,15 @@ public class QuestEditor : Editor {
         target.name = _quest.questTitle;
         EditorGUILayout.LabelField("Descripción:", _titlesLabelField);
         GUILayout.Space(10);
-       // _scrollDesc = EditorGUILayout.BeginScrollView(_scrollDesc,GUILayout.Width(200),GUILayout.Height(100));
+        EditorGUILayout.BeginVertical(GUILayout.Height(100));
+       _scrollDesc = EditorGUILayout.BeginScrollView(_scrollDesc,GUILayout.Height(100));
         _quest.questDescription = EditorGUILayout.TextField(_quest.questDescription,
             _wrap,
             GUILayout.Height(100),
             GUILayout.Width(200),
             GUILayout.ExpandWidth(false));
-        //EditorGUILayout.EndScrollView();
+        EditorGUILayout.EndScrollView();
+        EditorGUILayout.EndVertical();
     }
 
 
@@ -73,60 +74,22 @@ public class QuestEditor : Editor {
         EditorGUILayout.LabelField("Requisitos:", _titlesLabelField);
         GUILayout.Space(10);
         _quest.reqLvl = EditorGUILayout.IntField("Nivel Necesario", _quest.reqLvl);
-        _quest.reqItem = (GameObject)EditorGUILayout.ObjectField("Objeto Necesario",_quest.reqItem,typeof(GameObject),true);
-        _quest.reqKnows = EditorGUILayout.TextField("Conocer a",_quest.reqKnows);
+        _quest.reqItem = EditorGUILayout.TextField("Objeto Necesario", _quest.reqKnows);
+        _quest.reqKnows = EditorGUILayout.TextField("Conocer a", _quest.reqKnows);
+        _quest.reqExplore = EditorGUILayout.TextField("Haber explorado", _quest.reqKnows);
+        _quest.reqKills = EditorGUILayout.TextField("Haber matado a", _quest.reqKnows);
     }
 
-   /*region Guardar Mision
-
-
-    /*void SaveQuest()
-    {
-        var saveButton = GUILayout.Button("Guardar");
-        if (saveButton) SavePrefab();
-    }*/
-
-   /* void SavePrefab()
-    {
-      
-        var localPath = AssetDatabase.GenerateUniqueAssetPath("Assets/Quests/Quest Register/" + typeof(QuestEditor).ToString() + ".asset");
-        if (AssetDatabase.LoadAssetAtPath(localPath, typeof(Quest)))
+ 
+       /*if (AssetDatabase.LoadAssetAtPath(localPath, typeof(Quest)))
         {
             if (EditorUtility.DisplayDialog("Estas seguro?",
                                 "Esta mision ya existe en el registro, ¿queres sobreescribirla?",
                                 "Si, al toque vieja",
                                 "No, era mentira"))
-            {
-                ScriptableObjectUtility.CreateAsset<QuestEditor>();
-            }
-        }
-        else
-        {
-            ScriptableObjectUtility.CreateAsset<QuestEditor>();
-        }   
+       */
 
-    }*/
-
-    /*void CreatePrefab(string path)
-    {
-        _quest.json = JsonUtility.ToJson(_quest);
-        Debug.Log(_quest.json);
-        var prefab = PrefabUtility.CreatePrefab(path, _quest.gameObject);
-        PrefabUtility.ReplacePrefab(_quest.gameObject, prefab, ReplacePrefabOptions.ConnectToPrefab);
-        Clear();
-    }*/
-
-    /*void Clear()
-    {
-        _quest.questTitle = "Hola buenas tardes";
-        _quest.questDescription = "";
-        _quest.reqLvl = 0;
-        _quest.reqItem = null;
-        _quest.reqKnows = "";
-        _quest.experienceGained = 0;
-        _quest.creditsGained = 0;
-    }
-    #endregion*/
+    
 
 
 }
