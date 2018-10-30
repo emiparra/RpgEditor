@@ -158,8 +158,8 @@ public class QuestNodeWindow : EditorWindow
     private void ContextMenu()
     {
         GenericMenu GenericMenu = new GenericMenu();
-        GenericMenu.AddItem(new GUIContent("Add Node"), false, AddNode);
         GenericMenu.AddItem(new GUIContent("Add Start Node"), false, AddStartNode);
+        GenericMenu.AddItem(new GUIContent("Add Node"), false, AddNode);
         GenericMenu.AddItem(new GUIContent("Add Condition Node"), false, AddConditionNode);
         GenericMenu.AddItem(new GUIContent("Add Finish Node"), false, AddFinishNode);
         GenericMenu.ShowAsContext();
@@ -169,14 +169,14 @@ public class QuestNodeWindow : EditorWindow
     private void AddFinishNode()
     {
         CurrentName = "Finish Node";
-        allNodes.Add(new Node(0, 0, 150, 150, CurrentName));
+        allNodes.Add(new Node(0, 0, 150, 200, CurrentName));
         allNodes[allNodes.Count - 1].FinishNode = true;
         Repaint();
     }
     private void AddConditionNode()
     {
         CurrentName = "Condition Node";
-        allNodes.Add(new Node(0, 0, 150, 150, CurrentName));
+        allNodes.Add(new Node(0, 0, 150, 200, CurrentName));
         allNodes[allNodes.Count-1].ConditionNode = true;
         Repaint();
     }
@@ -189,7 +189,7 @@ public class QuestNodeWindow : EditorWindow
         else
         {
             CurrentName = "START NODE";
-            allNodes.Add(new Node(0, 0, 150, 150, CurrentName));
+            allNodes.Add(new Node(0, 0, 150, 200, CurrentName));
             allNodes[0].StartNode = true;
             startNodes++;
             Repaint();
@@ -202,7 +202,7 @@ public class QuestNodeWindow : EditorWindow
             return;
 
         CurrentName = "";
-        allNodes.Add(new Node(0, 0, 150, 150, CurrentName));
+        allNodes.Add(new Node(0, 0, 150, 200, CurrentName));
         
         Repaint();
     }
@@ -211,17 +211,14 @@ public class QuestNodeWindow : EditorWindow
         allNodes[id].checkQuest();
         if(allNodes[id].ConditionNode==true)
         {
-            Debug.Log("SOOYCONDICION!");
             EditorGUILayout.LabelField("Condicion:", GUILayout.Width(50));
-        }
-        if (allNodes[id].Quest != null)
-        {
-            
-        }
+        }      
             if (allNodes[id].StartNode == true)
             GUI.backgroundColor = Color.yellow;
+
             if(allNodes[id].FinishNode==true)
             GUI.backgroundColor = Color.blue;
+
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("Quest:", GUILayout.Width(50));
 
@@ -231,8 +228,12 @@ public class QuestNodeWindow : EditorWindow
 
         if (allNodes[id].Quest != null)
         {
-            EditorGUILayout.LabelField("complete:", GUILayout.Width(70));
-            allNodes[id].complete = EditorGUILayout.Toggle(allNodes[id].complete);
+            if(allNodes[id].FinishNode==false)
+            {
+                EditorGUILayout.LabelField("complete:", GUILayout.Width(70));
+                allNodes[id].complete = EditorGUILayout.Toggle(allNodes[id].complete);
+            }
+           
             if (allNodes[id].StartNode == false)
             {
                 
@@ -271,7 +272,7 @@ public class QuestNodeWindow : EditorWindow
             {
                 startNodes--;
             }
-          //  allNodes = allNodes.GetRange(0, allNodes.Count - 2);
+          // allNodes = allNodes.GetRange(0, allNodes.Count - 2);
 
         }
 
