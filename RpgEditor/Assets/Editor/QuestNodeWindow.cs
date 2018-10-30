@@ -180,6 +180,7 @@ public class QuestNodeWindow : EditorWindow
     }
     private void Drawnode(int id)
     {
+        allNodes[id].checkQuest();
         if(allNodes[id].ConditionNode==true)
         {
             Debug.Log("SOOYCONDICION!");
@@ -192,7 +193,7 @@ public class QuestNodeWindow : EditorWindow
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("Quest:", GUILayout.Width(50));
 
-        allNodes[id].Quest = (GameObject)EditorGUILayout.ObjectField(allNodes[id].Quest, typeof(GameObject), false);
+        allNodes[id].Quest = (ScriptableObject)EditorGUILayout.ObjectField(allNodes[id].Quest, typeof(ScriptableObject), false);
 
 
 
@@ -202,6 +203,9 @@ public class QuestNodeWindow : EditorWindow
         
         if (allNodes[id].Quest != null)
         {
+           
+          
+
             EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField("complete:", GUILayout.Width(70));
             allNodes[id].complete = EditorGUILayout.Toggle (allNodes[id].complete);
@@ -218,15 +222,23 @@ public class QuestNodeWindow : EditorWindow
 
                 Debug.Log("noooo");
             }
+            
+           
              
         }
 
-        EditorGUILayout.Space();
-        EditorGUILayout.Space();
-        EditorGUILayout.Space();
-        EditorGUILayout.Space();
-        EditorGUILayout.Space();
-        EditorGUILayout.Space();
+        if (allNodes[id].StartNode == false)
+        {
+            if (allNodes[id].Quest!=null)
+            {
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField("knows:", GUILayout.Width(70));
+                EditorGUILayout.LabelField(allNodes[id].Knows);
+                EditorGUILayout.EndHorizontal();
+            }
+               
+        }
+        // EditorGUILayout.LabelField("level:" + allNodes[id].Q.data.reqLvl);
         EditorGUILayout.Space();
         EditorGUILayout.Space();
         EditorGUILayout.Space();
@@ -244,7 +256,7 @@ public class QuestNodeWindow : EditorWindow
                 startNodes--;
             }
             allNodes.RemoveAt(id);
-            allNodes = allNodes.GetRange(0, allNodes.Count - 2);
+          //  allNodes = allNodes.GetRange(0, allNodes.Count - 2);
 
         }
 

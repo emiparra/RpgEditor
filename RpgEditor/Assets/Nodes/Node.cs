@@ -6,15 +6,15 @@ public class Node
  {
     public Rect rect;
     public string NodeName;
-    public  GameObject Quest;
+    public  ScriptableObject Quest;
     private bool _overnode;
     public bool complete;
     public List<Node> Connected;
-    public Quest Q;
+    public QuestData Q;
     public bool StartNode;
     public bool FinishNode;
     public bool ConditionNode;
-    
+    public string Knows;
     public Node(float x, float y, float width, float height, string name)
     {
         rect = new Rect(x, y, width, height);
@@ -35,10 +35,19 @@ public class Node
     {
         get { return _overnode; }
     }
+
+
+
+
+
+
+
+
     public void checkQuest()
     {
-      // Q = Quest.GetComponent<Quest>();
-        //Q.showQuest = complete;
+        Debug.Log("TETAAA");
+       
+
         if ( complete == true)
         {
             Debug.Log("ADENTRO!");
@@ -52,7 +61,13 @@ public class Node
                 Connected.Remove(this);
             }
         }
+
+     
+
+
     }
+
+
     
    
 }
