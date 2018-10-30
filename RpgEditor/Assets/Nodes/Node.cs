@@ -37,8 +37,8 @@ public class Node
     }
     public void checkQuest()
     {
-       Q = Quest.GetComponent<Quest>();
-        Q.showQuest = complete;
+      // Q = Quest.GetComponent<Quest>();
+        //Q.showQuest = complete;
         if ( complete == true)
         {
             Debug.Log("ADENTRO!");

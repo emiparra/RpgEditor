@@ -5,10 +5,10 @@ using UnityEditor;
 using System;
 using System.IO;
 
-[CustomEditor(typeof(Quest))]
+[CustomEditor(typeof(QuestData))]
 public class QuestEditor : Editor {
 
-    private Quest _quest;
+    private QuestData _quest;
     private GUIStyle _titlesLabelField;
     private GUIStyle _wrap;
     private Vector2 _scrollDesc;
@@ -16,7 +16,7 @@ public class QuestEditor : Editor {
 
     private void OnEnable()
     {
-        _quest = (Quest)target;
+        _quest = (QuestData)target;
         _titlesLabelField = new GUIStyle();
         _titlesLabelField.fontSize = 20;
         _wrap = new GUIStyle(EditorStyles.textField);
@@ -33,7 +33,7 @@ public class QuestEditor : Editor {
         QuestTitleAndDescription();
         Requirements();
         Bounties();
-        SaveQuest();
+       // SaveQuest();
         
     }
 
@@ -77,19 +77,19 @@ public class QuestEditor : Editor {
         _quest.reqKnows = EditorGUILayout.TextField("Conocer a",_quest.reqKnows);
     }
 
-    #region Guardar Mision
+   /*region Guardar Mision
 
 
-    void SaveQuest()
+    /*void SaveQuest()
     {
         var saveButton = GUILayout.Button("Guardar");
         if (saveButton) SavePrefab();
-    }
+    }*/
 
-    void SavePrefab()
+   /* void SavePrefab()
     {
-        string localPath = "Assets/Quests/Quest Register/" + target.name + ".prefab";
-
+      
+        var localPath = AssetDatabase.GenerateUniqueAssetPath("Assets/Quests/Quest Register/" + typeof(QuestEditor).ToString() + ".asset");
         if (AssetDatabase.LoadAssetAtPath(localPath, typeof(Quest)))
         {
             if (EditorUtility.DisplayDialog("Estas seguro?",
@@ -97,25 +97,26 @@ public class QuestEditor : Editor {
                                 "Si, al toque vieja",
                                 "No, era mentira"))
             {
-                CreatePrefab(localPath);
+                ScriptableObjectUtility.CreateAsset<QuestEditor>();
             }
         }
         else
         {
-            CreatePrefab(localPath);
+            ScriptableObjectUtility.CreateAsset<QuestEditor>();
         }   
 
-    }
-    void CreatePrefab(string path)
+    }*/
+
+    /*void CreatePrefab(string path)
     {
         _quest.json = JsonUtility.ToJson(_quest);
         Debug.Log(_quest.json);
         var prefab = PrefabUtility.CreatePrefab(path, _quest.gameObject);
         PrefabUtility.ReplacePrefab(_quest.gameObject, prefab, ReplacePrefabOptions.ConnectToPrefab);
         Clear();
-    }
+    }*/
 
-    void Clear()
+    /*void Clear()
     {
         _quest.questTitle = "Hola buenas tardes";
         _quest.questDescription = "";
@@ -125,7 +126,7 @@ public class QuestEditor : Editor {
         _quest.experienceGained = 0;
         _quest.creditsGained = 0;
     }
-    #endregion
+    #endregion*/
 
 
 }
