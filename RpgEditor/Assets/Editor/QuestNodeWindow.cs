@@ -79,8 +79,8 @@ public class QuestNodeWindow : EditorWindow
                 {
                     if (allNodes[i + 1] != null)
                     {
-                        Handles.DrawLine(new Vector2(allNodes[i].rect.position.x + allNodes[i].rect.width / 5f, allNodes[i].rect.position.y + allNodes[i].rect.height / 5f),
-                            new Vector2(allNodes[i + 1].rect.position.x + allNodes[i + 1].rect.width / 5f, allNodes[i + 1].rect.position.y + allNodes[i + 1].rect.height / 5f));
+                     Handles.DrawLine(new Vector2(allNodes[i].rect.position.x + allNodes[i].rect.width / 5f, allNodes[i].rect.position.y + allNodes[i].rect.height / 5f),
+                     new Vector2(allNodes[i + 1].rect.position.x + allNodes[i + 1].rect.width / 5f, allNodes[i + 1].rect.position.y + allNodes[i + 1].rect.height / 5f));
                     }
                     else
                     {
@@ -92,7 +92,6 @@ public class QuestNodeWindow : EditorWindow
 
             }
         }
-        //
         EndWindows();
         GUI.EndGroup();
         
@@ -162,9 +161,17 @@ public class QuestNodeWindow : EditorWindow
         GenericMenu.AddItem(new GUIContent("Add Node"), false, AddNode);
         GenericMenu.AddItem(new GUIContent("Add Start Node"), false, AddStartNode);
         GenericMenu.AddItem(new GUIContent("Add Condition Node"), false, AddConditionNode);
+        GenericMenu.AddItem(new GUIContent("Add Finish Node"), false, AddFinishNode);
         GenericMenu.ShowAsContext();
        
 
+    }
+    private void AddFinishNode()
+    {
+        CurrentName = "Finish Node";
+        allNodes.Add(new Node(0, 0, 150, 150, CurrentName));
+        allNodes[allNodes.Count - 1].FinishNode = true;
+        Repaint();
     }
     private void AddConditionNode()
     {
@@ -213,6 +220,8 @@ public class QuestNodeWindow : EditorWindow
         }
             if (allNodes[id].StartNode == true)
             GUI.backgroundColor = Color.yellow;
+            if(allNodes[id].FinishNode==true)
+            GUI.backgroundColor = Color.blue;
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("Quest:", GUILayout.Width(50));
 
@@ -250,11 +259,18 @@ public class QuestNodeWindow : EditorWindow
 
         if (GUILayout.Button("Delete"))
         {
-            if(allNodes[id].StartNode==true)
+            if(allNodes[id].StartNode==true && allNodes[id + 1] != null)
+            {
+                
+                    Debug.Log("NO PODES AMIGO, TENES OTROS NODOS CONECTADOS A ESTE");
+                    return;
+             
+            }
+            allNodes.RemoveAt(id);
+            if(allNodes[id].StartNode == true)
             {
                 startNodes--;
             }
-            allNodes.RemoveAt(id);
           //  allNodes = allNodes.GetRange(0, allNodes.Count - 2);
 
         }
