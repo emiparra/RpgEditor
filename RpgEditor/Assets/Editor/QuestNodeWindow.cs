@@ -12,6 +12,7 @@ public class QuestNodeWindow : EditorWindow
     private float toolbarHeight = 20;
     private Node _SelectedNode;
     string Nname;
+    private int startNodes = 0;
     
    
 
@@ -138,13 +139,40 @@ public class QuestNodeWindow : EditorWindow
     {
         GenericMenu GenericMenu = new GenericMenu();
         GenericMenu.AddItem(new GUIContent("Add Node"), false, AddNode);
+        GenericMenu.AddItem(new GUIContent("Add Start Node"), false, AddStartNode);
+        GenericMenu.AddItem(new GUIContent("Add Condition Node"), false, AddConditionNode);
         GenericMenu.ShowAsContext();
        
 
     }
-  
+    private void AddConditionNode()
+    {
+        CurrentName = "Condition Node";
+        allNodes.Add(new Node(0, 0, 150, 150, CurrentName));
+        allNodes[allNodes.Count-1].ConditionNode = true;
+        Repaint();
+    }
+
+    private void AddStartNode()
+
+    {
+        if (startNodes != 0)
+            return;
+        else
+        {
+            CurrentName = "START NODE";
+            allNodes.Add(new Node(0, 0, 150, 150, CurrentName));
+            allNodes[0].StartNode = true;
+            startNodes++;
+            Repaint();
+        }
+
+    }
     private void AddNode()
     {
+        if (startNodes == 0)
+            return;
+
         CurrentName = "";
         allNodes.Add(new Node(0, 0, 150, 150, CurrentName));
         
@@ -152,7 +180,15 @@ public class QuestNodeWindow : EditorWindow
     }
     private void Drawnode(int id)
     {
-      
+        if(allNodes[id].ConditionNode==true)
+        {
+            Debug.Log("SOOYCONDICION!");
+            EditorGUILayout.LabelField("Condicion:", GUILayout.Width(50));
+        }
+
+
+        if (allNodes[id].StartNode == true)
+            GUI.backgroundColor = Color.yellow;
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("Quest:", GUILayout.Width(50));
 
@@ -161,6 +197,7 @@ public class QuestNodeWindow : EditorWindow
 
 
         EditorGUILayout.EndHorizontal();
+
 
         
         if (allNodes[id].Quest != null)
@@ -182,6 +219,33 @@ public class QuestNodeWindow : EditorWindow
                 Debug.Log("noooo");
             }
              
+        }
+
+        EditorGUILayout.Space();
+        EditorGUILayout.Space();
+        EditorGUILayout.Space();
+        EditorGUILayout.Space();
+        EditorGUILayout.Space();
+        EditorGUILayout.Space();
+        EditorGUILayout.Space();
+        EditorGUILayout.Space();
+        EditorGUILayout.Space();
+        EditorGUILayout.Space();
+        EditorGUILayout.Space();
+        EditorGUILayout.Space();
+        EditorGUILayout.Space();
+        EditorGUILayout.Space();
+    
+      
+        if (GUILayout.Button("Delete"))
+        {
+            if(allNodes[id].StartNode==true)
+            {
+                startNodes--;
+            }
+            allNodes.RemoveAt(id);
+            allNodes = allNodes.GetRange(0, allNodes.Count - 2);
+
         }
 
         if (!panninscreen)

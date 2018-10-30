@@ -11,12 +11,16 @@ public class Node
     public bool complete;
     public List<Node> Connected;
     public Quest Q;
+    public bool StartNode;
+    public bool FinishNode;
+    public bool ConditionNode;
     
     public Node(float x, float y, float width, float height, string name)
     {
         rect = new Rect(x, y, width, height);
         Connected = new List<Node>();
         NodeName = name;
+     
     }
    
     public void CheckMouse(Event cE, Vector2 pan)
