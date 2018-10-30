@@ -12,6 +12,7 @@ public class QuestNodeWindow : EditorWindow
     private float toolbarHeight = 20;
     private Node _SelectedNode;
     string Nname;
+    public int space;
     private int startNodes = 0;
     
    
@@ -70,6 +71,26 @@ public class QuestNodeWindow : EditorWindow
 
             allNodes[i].rect = GUI.Window(i, allNodes[i].rect, Drawnode, allNodes[i].NodeName);
             GUI.backgroundColor = col;
+
+
+            if (allNodes[i].Quest != null)           
+            {
+                if (allNodes[i].complete == true)
+                {
+                    if (allNodes[i + 1] != null)
+                    {
+                        Handles.DrawLine(new Vector2(allNodes[i].rect.position.x + allNodes[i].rect.width / 5f, allNodes[i].rect.position.y + allNodes[i].rect.height / 5f),
+                            new Vector2(allNodes[i + 1].rect.position.x + allNodes[i + 1].rect.width / 5f, allNodes[i + 1].rect.position.y + allNodes[i + 1].rect.height / 5f));
+                    }
+                    else
+                    {
+                        Debug.Log("me pa que ganaste");
+                      
+                    }
+
+                }
+
+            }
         }
         //
         EndWindows();
@@ -186,69 +207,47 @@ public class QuestNodeWindow : EditorWindow
             Debug.Log("SOOYCONDICION!");
             EditorGUILayout.LabelField("Condicion:", GUILayout.Width(50));
         }
-
-
-        if (allNodes[id].StartNode == true)
+        if (allNodes[id].Quest != null)
+        {
+            
+        }
+            if (allNodes[id].StartNode == true)
             GUI.backgroundColor = Color.yellow;
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("Quest:", GUILayout.Width(50));
 
         allNodes[id].Quest = (QuestData)EditorGUILayout.ObjectField(allNodes[id].Quest, typeof(QuestData), false);
 
-
-
         EditorGUILayout.EndHorizontal();
 
-
-        
         if (allNodes[id].Quest != null)
         {
-           
-          
-
-            EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("complete:", GUILayout.Width(70));
-            allNodes[id].complete = EditorGUILayout.Toggle (allNodes[id].complete);
-
-            EditorGUILayout.EndHorizontal();
-            
-            if(allNodes[id].complete == true)
+            EditorGUILayout.LabelField("complete:", GUILayout.Width(70));
+            allNodes[id].complete = EditorGUILayout.Toggle(allNodes[id].complete);
+            if (allNodes[id].StartNode == false)
             {
-
-                Debug.Log("estrue man");
-            }
-            else
-            {
-
-                Debug.Log("noooo");
-            }
-            
-           
-             
-        }
-
-        if (allNodes[id].StartNode == false)
-        {
-            if (allNodes[id].Quest!=null)
-            {
+                
+                space = 150;
                 EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("knows:", GUILayout.Width(70));
-                EditorGUILayout.LabelField(allNodes[id].Knows);
+              
+
                 EditorGUILayout.EndHorizontal();
+
+               
+               
+                EditorGUILayout.LabelField("Know:" + allNodes[id].Quest.reqKnows, GUILayout.Width(space));
+     
+                EditorGUILayout.LabelField("Item:" + allNodes[id].Quest.reqItem, GUILayout.Width(space));
+              
+                EditorGUILayout.LabelField("Kills:" + allNodes[id].Quest.reqKills, GUILayout.Width(space));
+             
+                EditorGUILayout.LabelField("Explore:" + allNodes[id].Quest.reqExplore, GUILayout.Width(space));
+             
+                EditorGUILayout.LabelField("item:" + allNodes[id].Quest.reqItem, GUILayout.Width(space));
             }
                
         }
-        // EditorGUILayout.LabelField("level:" + allNodes[id].Q.data.reqLvl);
-        EditorGUILayout.Space();
-        EditorGUILayout.Space();
-        EditorGUILayout.Space();
-        EditorGUILayout.Space();
-        EditorGUILayout.Space();
-        EditorGUILayout.Space();
-        EditorGUILayout.Space();
-        EditorGUILayout.Space();
-    
-      
+
         if (GUILayout.Button("Delete"))
         {
             if(allNodes[id].StartNode==true)

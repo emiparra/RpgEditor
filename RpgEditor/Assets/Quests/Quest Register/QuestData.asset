@@ -9,15 +9,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 94732a355d8beba479eb05462b0471ff, type: 3}
-  m_Name: QuestData
+  m_Name: MISION KAKA
   m_EditorClassIdentifier: 
-  questTitle: 
-  questDescription: 
-  experienceGained: 0
-  creditsGained: 0
+  questTitle: MISION KAKA
+  questDescription: hay una caca gigante que te quiere comer, matala
+  experienceGained: 100
+  creditsGained: 60
   showQuest: 0
-  reqLvl: 0
-  reqItem: 
-  reqKnows: 
-  reqKills: 
-  reqExplore: 
+  reqLvl: 5
+  reqItem: espada
+  reqKnows: jose
+  reqKills: tu papa
+  reqExplore: tu mama

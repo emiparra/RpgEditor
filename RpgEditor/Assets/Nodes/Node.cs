@@ -10,7 +10,6 @@ public class Node
     private bool _overnode;
     public bool complete;
     public List<Node> Connected;
-    public QuestData Q;
     public bool StartNode;
     public bool FinishNode;
     public bool ConditionNode;
@@ -45,19 +44,17 @@ public class Node
 
     public void checkQuest()
     {
-        Debug.Log("TETAAA");
        
 
         if ( complete == true)
         {
-            Debug.Log("ADENTRO!");
             Connected.Add(this);
         }
         else if (complete == false)
         {
             if(Connected.Contains(this))
             {
-                Debug.Log("AFUERA!");
+
                 Connected.Remove(this);
             }
         }
