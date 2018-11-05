@@ -13,8 +13,8 @@ public class QuestNodeWindow : EditorWindow
     private Node _SelectedNode;
     string Nname;
     public int space;
-    private int startNodes = 0;
-    
+    private bool finish= false;
+    private bool start= false;
    
 
     private Vector2 Graphpan;
@@ -37,8 +37,9 @@ public class QuestNodeWindow : EditorWindow
 
         Nodewindow.Graphpan = new Vector2(0, Nodewindow.toolbarHeight);
         Nodewindow.graphrect = new Rect(0, Nodewindow.toolbarHeight, 100000, 100000);
+
+
         
-     
     }
 
     private void OnGUI()
@@ -92,9 +93,13 @@ public class QuestNodeWindow : EditorWindow
 
             }
         }
+       
         EndWindows();
         GUI.EndGroup();
-        
+        AddStartNode();
+        AddFinishNode();
+        Repaint();
+
     }
     
     
@@ -158,20 +163,25 @@ public class QuestNodeWindow : EditorWindow
     private void ContextMenu()
     {
         GenericMenu GenericMenu = new GenericMenu();
-        GenericMenu.AddItem(new GUIContent("Add Start Node"), false, AddStartNode);
         GenericMenu.AddItem(new GUIContent("Add Node"), false, AddNode);
         GenericMenu.AddItem(new GUIContent("Add Condition Node"), false, AddConditionNode);
-        GenericMenu.AddItem(new GUIContent("Add Finish Node"), false, AddFinishNode);
         GenericMenu.ShowAsContext();
        
 
     }
     private void AddFinishNode()
     {
-        CurrentName = "Finish Node";
-        allNodes.Add(new Node(0, 0, 150, 200, CurrentName));
-        allNodes[allNodes.Count - 1].FinishNode = true;
-        Repaint();
+        if (finish == true)
+            return;
+        else
+        {
+
+            CurrentName = "Finish Node";
+            allNodes.Add(new Node(700, 0, 150, 200, CurrentName));
+            allNodes[allNodes.Count - 1].FinishNode = true;
+            finish = true;
+            Repaint();
+        }
     }
     private void AddConditionNode()
     {
@@ -184,22 +194,21 @@ public class QuestNodeWindow : EditorWindow
     private void AddStartNode()
 
     {
-        if (startNodes != 0)
+        if (start==true)
             return;
         else
         {
             CurrentName = "START NODE";
             allNodes.Add(new Node(0, 0, 150, 200, CurrentName));
             allNodes[0].StartNode = true;
-            startNodes++;
+            
+            start = true;
             Repaint();
         }
 
     }
     private void AddNode()
     {
-        if (startNodes == 0)
-            return;
 
         CurrentName = "";
         allNodes.Add(new Node(0, 0, 150, 200, CurrentName));
@@ -208,6 +217,12 @@ public class QuestNodeWindow : EditorWindow
     }
     private void Drawnode(int id)
     {
+       if(allNodes[id].FinishNode==true)
+        {
+            
+            allNodes[id] = allNodes[allNodes.Count-1];
+        }
+        
         allNodes[id].checkQuest();
         if(allNodes[id].ConditionNode==true)
         {
@@ -230,61 +245,44 @@ public class QuestNodeWindow : EditorWindow
         {
             if(allNodes[id].FinishNode==false)
             {
+                EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField("complete:", GUILayout.Width(70));
                 allNodes[id].complete = EditorGUILayout.Toggle(allNodes[id].complete);
+                EditorGUILayout.EndHorizontal();
             }
            
             if (allNodes[id].StartNode == false)
-            {
-                
+            {         
                 space = 150;
-                EditorGUILayout.BeginHorizontal();
-              
-
-                EditorGUILayout.EndHorizontal();
-
-               
-               
-                EditorGUILayout.LabelField("Know:" + allNodes[id].Quest.reqKnows, GUILayout.Width(space));
+                EditorGUILayout.LabelField("Know: " + allNodes[id].Quest.reqKnows, GUILayout.Width(space));
      
-                EditorGUILayout.LabelField("Item:" + allNodes[id].Quest.reqItem, GUILayout.Width(space));
+                EditorGUILayout.LabelField("Item: " + allNodes[id].Quest.reqItem, GUILayout.Width(space));
               
-                EditorGUILayout.LabelField("Kills:" + allNodes[id].Quest.reqKills, GUILayout.Width(space));
+                EditorGUILayout.LabelField("Kills: " + allNodes[id].Quest.reqKills, GUILayout.Width(space));
              
-                EditorGUILayout.LabelField("Explore:" + allNodes[id].Quest.reqExplore, GUILayout.Width(space));
+                EditorGUILayout.LabelField("Explore: " + allNodes[id].Quest.reqExplore, GUILayout.Width(space));
              
-                EditorGUILayout.LabelField("item:" + allNodes[id].Quest.reqItem, GUILayout.Width(space));
+                EditorGUILayout.LabelField("item: " + allNodes[id].Quest.reqItem, GUILayout.Width(space));
             }
                
         }
-
-        if (GUILayout.Button("Delete"))
+        if(allNodes[id].StartNode==false && allNodes[id].FinishNode==false)
         {
-            if(allNodes[id].StartNode==true && allNodes[id + 1] != null)
+            if (GUILayout.Button("Delete"))
             {
-                
-                    Debug.Log("NO PODES AMIGO, TENES OTROS NODOS CONECTADOS A ESTE");
-                    return;
-             
-            }
-            allNodes.RemoveAt(id);
-            if(allNodes[id].StartNode == true)
-            {
-                startNodes--;
-            }
-          // allNodes = allNodes.GetRange(0, allNodes.Count - 2);
 
+                allNodes.RemoveAt(id);
+
+
+            }
         }
+       
 
         if (!panninscreen)
-        {
-          
+        {         
             GUI.DragWindow();
-            if (!allNodes[id].OverNode) return;
-            if (allNodes[id].rect.x < 0)
-                allNodes[id].rect.x = 0;
-            if (allNodes[id].rect.y < toolbarHeight - Graphpan.y)
-                allNodes[id].rect.y = toolbarHeight - Graphpan.y;
         }
     }
+
+   
 }
