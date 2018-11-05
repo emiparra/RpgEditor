@@ -11,6 +11,7 @@ public class QuestEditor : Editor {
     private QuestData _quest;
     private GUIStyle _titlesLabelField;
     private GUIStyle _wrap;
+    private GUIStyle _newFont;
     private Vector2 _scrollDesc;
   
 
@@ -19,7 +20,10 @@ public class QuestEditor : Editor {
         _quest = (QuestData)target;
         _titlesLabelField = new GUIStyle();
         _titlesLabelField.fontSize = 20;
-        _wrap = new GUIStyle(EditorStyles.textField);
+        _titlesLabelField.fontStyle = FontStyle.BoldAndItalic;
+        _newFont = new GUIStyle();
+        _newFont.fontStyle = FontStyle.Italic;
+        _wrap = new GUIStyle(EditorStyles.textArea);
         _wrap.wordWrap = true;
 
 
@@ -30,6 +34,7 @@ public class QuestEditor : Editor {
 
     public override void OnInspectorGUI()
     {
+        FontAndBackground();
         QuestTitleAndDescription();
         Requirements();
         Bounties();
@@ -37,23 +42,38 @@ public class QuestEditor : Editor {
     }
 
 
+    void FontAndBackground()
+    {
+        GUI.DrawTexture(new Rect(0, 43, Screen.width, 610), (Texture2D)Resources.Load("Parchment"), ScaleMode.StretchToFill, true, 10f);
+        _quest.fantasieFont = (Font)EditorGUILayout.ObjectField("Fuente", _quest.fantasieFont,typeof(Font), true);
+        // _newFont.font = _quest.fantasieFont;
+
+        //GUI.depth = -10;
+        
+        //GUI.Box(GUILayoutUtility.GetRect(Screen.width, Screen.height), (Texture2D)Resources.Load("Parchment"));
+        //EditorGUI.DrawRect(GUILayoutUtility.GetRect(20, 200), Color.green);
+       
+
+
+    }
+
+
     void QuestTitleAndDescription()
     {
+        //GUI.depth = 10;
         EditorGUILayout.LabelField("Titulo de la misión", _titlesLabelField);
         GUILayout.Space(10);
         _quest.questTitle = EditorGUILayout.TextField(_quest.questTitle);
         target.name = _quest.questTitle;
         EditorGUILayout.LabelField("Descripción:", _titlesLabelField);
         GUILayout.Space(10);
-        EditorGUILayout.BeginVertical();
-       _scrollDesc = EditorGUILayout.BeginScrollView(_scrollDesc,GUILayout.Height(100));
         _quest.questDescription = EditorGUILayout.TextArea(_quest.questDescription,
             _wrap,
             GUILayout.Height(100),
             GUILayout.Width(200),
-            GUILayout.ExpandWidth(false));
-        EditorGUILayout.EndScrollView();
-        EditorGUILayout.EndVertical();
+            GUILayout.ExpandWidth(false),
+            GUILayout.ExpandHeight(true));
+        
     }
 
 
