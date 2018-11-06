@@ -254,7 +254,7 @@ public class QuestNodeWindow : EditorWindow
             if (allNodes[id].StartNode == false)
             {         
                 space = 150;
-                EditorGUILayout.LabelField("Know: " + allNodes[id].Quest.reqKnows, GUILayout.Width(space));
+                /*EditorGUILayout.LabelField("Know: " + allNodes[id].Quest.reqKnows, GUILayout.Width(space));
      
                 EditorGUILayout.LabelField("Item: " + allNodes[id].Quest.reqItem, GUILayout.Width(space));
               
@@ -262,7 +262,7 @@ public class QuestNodeWindow : EditorWindow
              
                 EditorGUILayout.LabelField("Explore: " + allNodes[id].Quest.reqExplore, GUILayout.Width(space));
              
-                EditorGUILayout.LabelField("item: " + allNodes[id].Quest.reqItem, GUILayout.Width(space));
+                EditorGUILayout.LabelField("item: " + allNodes[id].Quest.reqItem, GUILayout.Width(space));*/
             }
                
         }

@@ -8,12 +8,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94732a355d8beba479eb05462b0471ff, type: 3}
-  m_Name: asddasdda
+  m_Script: {fileID: 11500000, guid: a815e0dec2151324f8b018df9c5f0ca8, type: 3}
+  m_Name: ParamsData
   m_EditorClassIdentifier: 
-  questTitle: asddasdda
-  questDescription: asdsadasasdasda
-  fantasieFont: {fileID: 0}
-  experienceGained: 0
-  creditsGained: 0
-  showQuest: 0
+  reqLvl: 0
+  reqItem: 
+  reqKnows: 
+  reqKills: 
+  reqExplore: 

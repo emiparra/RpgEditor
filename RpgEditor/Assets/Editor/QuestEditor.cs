@@ -36,7 +36,6 @@ public class QuestEditor : Editor {
     {
         FontAndBackground();
         QuestTitleAndDescription();
-        Requirements();
         Bounties();
         
     }
@@ -44,7 +43,7 @@ public class QuestEditor : Editor {
 
     void FontAndBackground()
     {
-        GUI.DrawTexture(new Rect(0, 43, Screen.width, 610), (Texture2D)Resources.Load("Parchment"), ScaleMode.StretchToFill, true, 10f);
+        GUI.DrawTexture(new Rect(0, 43, Screen.width, Screen.height), (Texture2D)Resources.Load("parchment_paper_detail"), ScaleMode.StretchToFill, true, 10f);
         _quest.fantasieFont = (Font)EditorGUILayout.ObjectField("Fuente", _quest.fantasieFont,typeof(Font), true);
         // _newFont.font = _quest.fantasieFont;
 
@@ -89,16 +88,7 @@ public class QuestEditor : Editor {
 
 
 
-    void Requirements()
-    {
-        EditorGUILayout.LabelField("Requisitos:", _titlesLabelField);
-        GUILayout.Space(10);
-        _quest.reqLvl = EditorGUILayout.IntField("Nivel Necesario", _quest.reqLvl);
-        _quest.reqItem = EditorGUILayout.TextField("Objeto Necesario", _quest.reqItem);
-        _quest.reqKnows = EditorGUILayout.TextField("Conocer a", _quest.reqKnows);
-        _quest.reqExplore = EditorGUILayout.TextField("Haber explorado", _quest.reqExplore);
-        _quest.reqKills = EditorGUILayout.TextField("Haber matado a", _quest.reqKills);
-    }
+   
 
  
        /*if (AssetDatabase.LoadAssetAtPath(localPath, typeof(Quest)))

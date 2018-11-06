@@ -11,11 +11,7 @@ public class QuestData : ScriptableObject
     public int experienceGained;
     public int creditsGained;
     public bool showQuest;
-    public int reqLvl;
-    public string reqItem;
-    public string reqKnows;
-    public string reqKills;
-    public string reqExplore;
+   
     
 	
 
