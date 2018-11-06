@@ -226,20 +226,44 @@ public class QuestNodeWindow : EditorWindow
         allNodes[id].checkQuest();
         if(allNodes[id].ConditionNode==true)
         {
+            space = 150;
+            EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Condicion:", GUILayout.Width(50));
+
+            allNodes[id].Param = (ParamsData)EditorGUILayout.ObjectField(allNodes[id].Param, typeof(ParamsData), false);
+
+            EditorGUILayout.EndHorizontal();
+            if(allNodes[id].Param!=null)
+            {
+                EditorGUILayout.LabelField("Know: " + allNodes[id].Param.reqKnows, GUILayout.Width(space));
+
+                EditorGUILayout.LabelField("Item: " + allNodes[id].Param.reqItem, GUILayout.Width(space));
+
+                EditorGUILayout.LabelField("Kills: " + allNodes[id].Param.reqKills, GUILayout.Width(space));
+
+                EditorGUILayout.LabelField("Explore: " + allNodes[id].Param.reqExplore, GUILayout.Width(space));
+
+                EditorGUILayout.LabelField("item: " + allNodes[id].Param.reqItem, GUILayout.Width(space));
+            }
+           
+
         }      
             if (allNodes[id].StartNode == true)
             GUI.backgroundColor = Color.yellow;
 
             if(allNodes[id].FinishNode==true)
-            GUI.backgroundColor = Color.blue;
+            GUI.backgroundColor = Color.yellow;
 
-        EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField("Quest:", GUILayout.Width(50));
+            if(allNodes[id].ConditionNode==false)
+        {
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("Quest:", GUILayout.Width(50));
 
-        allNodes[id].Quest = (QuestData)EditorGUILayout.ObjectField(allNodes[id].Quest, typeof(QuestData), false);
+            allNodes[id].Quest = (QuestData)EditorGUILayout.ObjectField(allNodes[id].Quest, typeof(QuestData), false);
 
-        EditorGUILayout.EndHorizontal();
+            EditorGUILayout.EndHorizontal();
+        }
+       
 
         if (allNodes[id].Quest != null)
         {
@@ -249,21 +273,7 @@ public class QuestNodeWindow : EditorWindow
                 EditorGUILayout.LabelField("complete:", GUILayout.Width(70));
                 allNodes[id].complete = EditorGUILayout.Toggle(allNodes[id].complete);
                 EditorGUILayout.EndHorizontal();
-            }
-           
-            if (allNodes[id].StartNode == false)
-            {         
-                space = 150;
-                /*EditorGUILayout.LabelField("Know: " + allNodes[id].Quest.reqKnows, GUILayout.Width(space));
-     
-                EditorGUILayout.LabelField("Item: " + allNodes[id].Quest.reqItem, GUILayout.Width(space));
-              
-                EditorGUILayout.LabelField("Kills: " + allNodes[id].Quest.reqKills, GUILayout.Width(space));
-             
-                EditorGUILayout.LabelField("Explore: " + allNodes[id].Quest.reqExplore, GUILayout.Width(space));
-             
-                EditorGUILayout.LabelField("item: " + allNodes[id].Quest.reqItem, GUILayout.Width(space));*/
-            }
+            } 
                
         }
         if(allNodes[id].StartNode==false && allNodes[id].FinishNode==false)

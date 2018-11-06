@@ -7,6 +7,7 @@ public class Node
     public Rect rect;
     public string NodeName;
     public  QuestData Quest;
+    public ParamsData Param;
     private bool _overnode;
     public bool complete;
     public List<Node> Connected;
