@@ -23,8 +23,10 @@ public class QuestEditor : Editor {
         _titlesLabelField.fontStyle = FontStyle.BoldAndItalic;
         _newFont = new GUIStyle();
         _newFont.fontStyle = FontStyle.Italic;
+        _newFont.fontSize = 12;
         _wrap = new GUIStyle(EditorStyles.textArea);
         _wrap.wordWrap = true;
+        _wrap.fontStyle = FontStyle.Italic;
 
 
            
@@ -37,21 +39,17 @@ public class QuestEditor : Editor {
         FontAndBackground();
         QuestTitleAndDescription();
         Bounties();
-        
+        GUILayout.Space(300);
+        _quest.fantasieFont = (Font)EditorGUILayout.ObjectField("Fuente", _quest.fantasieFont, typeof(Font), true);
+
     }
 
 
     void FontAndBackground()
     {
-        GUI.DrawTexture(new Rect(0, 43, Screen.width, Screen.height), (Texture2D)Resources.Load("parchment_paper_detail"), ScaleMode.StretchToFill, true, 10f);
-        Separator("divider1", 25f);
-        _quest.fantasieFont = (Font)EditorGUILayout.ObjectField("Fuente", _quest.fantasieFont,typeof(Font), true);
-        // _newFont.font = _quest.fantasieFont;
-
-        //GUI.depth = -10;
-        
-        //GUI.Box(GUILayoutUtility.GetRect(Screen.width, Screen.height), (Texture2D)Resources.Load("Parchment"));
-        //EditorGUI.DrawRect(GUILayoutUtility.GetRect(20, 200), Color.green);
+        GUI.DrawTexture(new Rect(0, 43, Screen.width, Screen.height),
+            (Texture2D)Resources.Load("parchment_paper_detail"),
+            ScaleMode.StretchToFill, true, 10f);
        
 
 
@@ -60,10 +58,10 @@ public class QuestEditor : Editor {
 
     void QuestTitleAndDescription()
     {
-        //GUI.depth = 10;
+        GUILayout.Space(20);
         EditorGUILayout.LabelField("Titulo de la misión", _titlesLabelField);
         GUILayout.Space(10);
-        _quest.questTitle = EditorGUILayout.TextField(_quest.questTitle);
+        _quest.questTitle = EditorGUILayout.TextField(_quest.questTitle,_newFont);
         Separator("divider1",25f);
         target.name = _quest.questTitle;
         EditorGUILayout.LabelField("Descripción:", _titlesLabelField);
@@ -85,33 +83,32 @@ public class QuestEditor : Editor {
     {
         EditorGUILayout.LabelField("Recompensas:", _titlesLabelField);
         GUILayout.Space(10);
-        _quest.experienceGained = EditorGUILayout.IntField("Experiencia", _quest.experienceGained);
-        _quest.creditsGained = EditorGUILayout.IntField("Creditos   ", _quest.creditsGained);
+        GUILayout.BeginHorizontal();
+        EditorGUILayout.LabelField("Experiencia", _newFont);
+        _quest.experienceGained = EditorGUILayout.IntField(_quest.experienceGained,_newFont);
+        GUILayout.EndHorizontal();
+        GUILayout.BeginHorizontal();
+        EditorGUILayout.LabelField("Creditos", _newFont);
+        _quest.creditsGained = EditorGUILayout.IntField(_quest.creditsGained,_newFont);
+        GUILayout.EndHorizontal();
         Separator("divider2",70f);
+
     }
 
 
     void Separator(string img,float hgt)
     {
         GUILayout.Space(10);
-        GUI.DrawTexture(GUILayoutUtility.GetRect(Screen.width, hgt), (Texture2D)Resources.Load(img), ScaleMode.StretchToFill, true, 10f);
+        GUI.DrawTexture(GUILayoutUtility.GetRect(Screen.width, hgt),
+            (Texture2D)Resources.Load(img),
+            ScaleMode.StretchToFill,
+            true,
+            10f);
         GUILayout.Space(10);
     }
 
 
 
-   
-
- 
-       /*if (AssetDatabase.LoadAssetAtPath(localPath, typeof(Quest)))
-        {
-            if (EditorUtility.DisplayDialog("Estas seguro?",
-                                "Esta mision ya existe en el registro, ¿queres sobreescribirla?",
-                                "Si, al toque vieja",
-                                "No, era mentira"))
-       */
-
-    
 
 
 }
