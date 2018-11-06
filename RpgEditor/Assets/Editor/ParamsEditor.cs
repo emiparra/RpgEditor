@@ -28,6 +28,7 @@ public class ParamsEditor : Editor {
 
     void Requirements()
     {
+        Separator("divider1", 25f);
         EditorGUILayout.LabelField("Requisitos:", _titlesLabelField);
         GUILayout.Space(10);
         _params.reqLvl = EditorGUILayout.IntField("Nivel Necesario", _params.reqLvl);
@@ -35,6 +36,14 @@ public class ParamsEditor : Editor {
         _params.reqKnows = EditorGUILayout.TextField("Conocer a", _params.reqKnows);
         _params.reqExplore = EditorGUILayout.TextField("Haber explorado", _params.reqExplore);
         _params.reqKills = EditorGUILayout.TextField("Haber matado a", _params.reqKills);
+        Separator("divider1", 25f);
+    }
+
+    void Separator(string img, float hgt)
+    {
+        GUILayout.Space(10);
+        GUI.DrawTexture(GUILayoutUtility.GetRect(Screen.width, hgt), (Texture2D)Resources.Load(img), ScaleMode.StretchToFill, true, 10f);
+        GUILayout.Space(10);
     }
 
 
