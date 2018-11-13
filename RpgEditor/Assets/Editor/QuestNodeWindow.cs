@@ -15,7 +15,7 @@ public class QuestNodeWindow : EditorWindow
     public int space;
     private bool finish= false;
     private bool start= false;
-   
+    public bool lining;
 
     private Vector2 Graphpan;
     private Rect graphrect;
@@ -73,6 +73,10 @@ public class QuestNodeWindow : EditorWindow
             allNodes[i].rect = GUI.Window(i, allNodes[i].rect, Drawnode, allNodes[i].NodeName);
             GUI.backgroundColor = col;
 
+            if(allNodes[i].selected == true)
+            {
+                Handles.DrawLine(new Vector2(allNodes[i].rect.position.x + allNodes[i].rect.width, allNodes[i].rect.position.y + allNodes[i].rect.height),);
+            }
 
             if (allNodes[i].Quest != null)           
             {
@@ -136,9 +140,10 @@ public class QuestNodeWindow : EditorWindow
         Node overnode = null;
         for (int i = 0; i < allNodes.Count; i++)
         {
+            
 
-          
-           
+
+
                 allNodes[i].CheckMouse(Event.current, Graphpan);
                 if (allNodes[i].OverNode)
                     overnode = allNodes[i];
@@ -146,7 +151,24 @@ public class QuestNodeWindow : EditorWindow
 
           
         }
-        var prev = _SelectedNode;
+        if (_SelectedNode != null)
+        {
+            var nod = new Vector2(_SelectedNode.rect.x + _SelectedNode.rect.width, _SelectedNode.rect.y + _SelectedNode.rect.height);
+            if (currentE.button == 2 && currentE.type == EventType.MouseDown && graphrect.Contains(nod))
+            {
+                lining = true;
+            }
+           
+            if(lining == true)
+            {
+                _SelectedNode.selected = true;
+              
+                
+            }
+
+        }
+        
+            var prev = _SelectedNode;
         if (currentE.button == 0 && currentE.type == EventType.MouseDown)
         {
             if (overnode != null)
@@ -158,6 +180,7 @@ public class QuestNodeWindow : EditorWindow
                     
                     
                     }
+
     }
  
     private void ContextMenu()
@@ -167,6 +190,22 @@ public class QuestNodeWindow : EditorWindow
         GenericMenu.AddItem(new GUIContent("Add Condition Node"), false, AddConditionNode);
         GenericMenu.ShowAsContext();
        
+
+    }
+    private void AddStartNode()
+
+    {
+        if (start == true)
+            return;
+        else
+        {
+            CurrentName = "START NODE";
+            allNodes.Add(new Node(0, 0, 150, 200, CurrentName));
+            allNodes[0].StartNode = true;
+
+            start = true;
+            Repaint();
+        }
 
     }
     private void AddFinishNode()
@@ -191,22 +230,7 @@ public class QuestNodeWindow : EditorWindow
         Repaint();
     }
 
-    private void AddStartNode()
-
-    {
-        if (start==true)
-            return;
-        else
-        {
-            CurrentName = "START NODE";
-            allNodes.Add(new Node(0, 0, 150, 200, CurrentName));
-            allNodes[0].StartNode = true;
-            
-            start = true;
-            Repaint();
-        }
-
-    }
+  
     private void AddNode()
     {
 
@@ -224,12 +248,12 @@ public class QuestNodeWindow : EditorWindow
         }
         
         allNodes[id].checkQuest();
+        
         if(allNodes[id].ConditionNode==true)
         {
             space = 150;
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Condicion:", GUILayout.Width(50));
-
             allNodes[id].Param = (ParamsData)EditorGUILayout.ObjectField(allNodes[id].Param, typeof(ParamsData), false);
 
             EditorGUILayout.EndHorizontal();
@@ -254,7 +278,8 @@ public class QuestNodeWindow : EditorWindow
             if(allNodes[id].FinishNode==true)
             GUI.backgroundColor = Color.yellow;
 
-            if(allNodes[id].ConditionNode==false)
+            if(allNodes[id].ConditionNode==false
+            && allNodes[id].FinishNode==false)
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Quest:", GUILayout.Width(50));

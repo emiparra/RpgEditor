@@ -15,10 +15,12 @@ public class Node
     public bool FinishNode;
     public bool ConditionNode;
     public string Knows;
+    public bool selected;
     public Node(float x, float y, float width, float height, string name)
     {
         rect = new Rect(x, y, width, height);
         Connected = new List<Node>();
+       
         NodeName = name;
      
     }
