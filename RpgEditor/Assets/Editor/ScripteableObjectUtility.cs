@@ -5,11 +5,11 @@ using UnityEditor;
 
 public static class ScriptableObjectUtility
 {
-    public static void CreateAsset<T>() where T : ScriptableObject
+    public static void CreateAsset<T>(string path) where T : ScriptableObject
     {
         T asset = ScriptableObject.CreateInstance<T>();
 
-        string assetPathAndName = AssetDatabase.GenerateUniqueAssetPath("Assets/Quests/Quest Register/" + typeof(T).ToString() + ".asset");
+        string assetPathAndName = AssetDatabase.GenerateUniqueAssetPath(path + typeof(T).ToString() + ".asset");
 
         AssetDatabase.CreateAsset(asset, assetPathAndName);
 

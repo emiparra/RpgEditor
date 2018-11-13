@@ -6,11 +6,13 @@ public class ScriptableObjectsCreator
     [MenuItem("RPG/Crear/Quest")]
     public static void CreateQuest()
     {
-        ScriptableObjectUtility.CreateAsset<QuestData>();
+        var path = "Assets/Quests/Quest Register/";
+        ScriptableObjectUtility.CreateAsset<QuestData>(path);
     }
     [MenuItem("RPG/Crear/Parametro")]
     public static void CreateParam()
     {
-        ScriptableObjectUtility.CreateAsset<ParamsData>();
+        var path = "Assets/Quests/Params Register/";
+        ScriptableObjectUtility.CreateAsset<ParamsData>(path);
     }
 }
