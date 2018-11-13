@@ -45,16 +45,16 @@ public class QuestNodeWindow : EditorWindow
     private void OnGUI()
     {
         CheckMouse(Event.current);
-        
-      
-      
 
+
+
+        GUI.BeginGroup(graphrect);
+        BeginWindows();
         graphrect.x = Graphpan.x;
         graphrect.y = Graphpan.y;
         EditorGUI.DrawRect(new Rect(0, toolbarHeight, position.width, position.height - toolbarHeight), Color.black);
 
-        GUI.BeginGroup(graphrect);
-        BeginWindows();
+       
 
         var col = GUI.backgroundColor;
         
@@ -75,7 +75,7 @@ public class QuestNodeWindow : EditorWindow
 
             if(allNodes[i].selected == true)
             {
-                Handles.DrawLine(new Vector2(allNodes[i].rect.position.x + allNodes[i].rect.width, allNodes[i].rect.position.y + allNodes[i].rect.height),);
+                Handles.DrawLine(new Vector2(allNodes[i].rect.position.x + allNodes[i].rect.width, allNodes[i].rect.position.y + allNodes[i].rect.height), OriginalMousePosition);
             }
 
             if (allNodes[i].Quest != null)           
