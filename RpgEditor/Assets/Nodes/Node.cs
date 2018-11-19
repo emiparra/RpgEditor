@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-public class Node 
+public class Node : ScriptableObject
  {
     public Rect rect;
     public string NodeName;

@@ -16,18 +16,24 @@ public class QuestNodeWindow : EditorWindow
     private bool finish= false;
     private bool start= false;
     public bool lining;
-
+    public Node save;
+  
     private Vector2 Graphpan;
     private Rect graphrect;
     private bool panninscreen;
     private Vector2 OriginalMousePosition;
     private Vector2 prevPan;
+    private Vector2 P1;
+    private Vector2 P2;
 
 
-	[MenuItem("RPG/Quest Nodes")]
+
+    [MenuItem("RPG/Quest Nodes")]
 	
     public static void OpenWindow()
     {
+        
+
         var Nodewindow = GetWindow<QuestNodeWindow>();
         Nodewindow.allNodes = new List<Node>();
         Nodewindow.style = new GUIStyle();
@@ -44,28 +50,41 @@ public class QuestNodeWindow : EditorWindow
 
     private void OnGUI()
     {
+
         CheckMouse(Event.current);
 
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.LabelField("Load", GUILayout.Width(50));
+
+        //(QuestNodeWindow)EditorGUILayout.ObjectField(load,typeof(QuestNodeWindow) , false); if()
+
+        /*
+
+            if (GUILayout.Button("SAVE"))
+        {
+            ScriptableObjectsCreator.CreateNodeWindow();
+        }*/
+
+        EditorGUILayout.EndHorizontal();
 
 
-        GUI.BeginGroup(graphrect);
-        BeginWindows();
         graphrect.x = Graphpan.x;
         graphrect.y = Graphpan.y;
         EditorGUI.DrawRect(new Rect(0, toolbarHeight, position.width, position.height - toolbarHeight), Color.black);
 
-       
+        GUI.BeginGroup(graphrect);
+        BeginWindows();
 
         var col = GUI.backgroundColor;
-        
+
 
         for (int i = 0; i < allNodes.Count; i++)
         {
-           
 
-            if(allNodes[i].complete == false && allNodes[i] != _SelectedNode)
+
+            if (allNodes[i].complete == false && allNodes[i] != _SelectedNode)
                 GUI.backgroundColor = Color.red;
-           else if (allNodes[i].complete == true && allNodes[i] != _SelectedNode)
+            else if (allNodes[i].complete == true && allNodes[i] != _SelectedNode)
                 GUI.backgroundColor = Color.green;
             if (allNodes[i] == _SelectedNode)
                 GUI.backgroundColor = Color.grey;
@@ -73,43 +92,51 @@ public class QuestNodeWindow : EditorWindow
             allNodes[i].rect = GUI.Window(i, allNodes[i].rect, Drawnode, allNodes[i].NodeName);
             GUI.backgroundColor = col;
 
-            if(allNodes[i].selected == true)
-            {
-                Handles.DrawLine(new Vector2(allNodes[i].rect.position.x + allNodes[i].rect.width, allNodes[i].rect.position.y + allNodes[i].rect.height), OriginalMousePosition);
-            }
+            
 
-            if (allNodes[i].Quest != null)           
-            {
-                if (allNodes[i].complete == true)
+
+             if (allNodes[i].Quest != null)           
+             {
+                if (allNodes[i].selected == true)
                 {
-                    if (allNodes[i + 1] != null)
+                    if (allNodes[i].FinishNode == false)
                     {
-                     Handles.DrawLine(new Vector2(allNodes[i].rect.position.x + allNodes[i].rect.width / 5f, allNodes[i].rect.position.y + allNodes[i].rect.height / 5f),
-                     new Vector2(allNodes[i + 1].rect.position.x + allNodes[i + 1].rect.width / 5f, allNodes[i + 1].rect.position.y + allNodes[i + 1].rect.height / 5f));
-                    }
-                    else
-                    {
-                        Debug.Log("me pa que ganaste");
-                      
+
+                        Handles.DrawLine(P1, allNodes[i].rect.position);
+                        
+                        
                     }
 
                 }
 
-            }
-        }
-       
-        EndWindows();
-        GUI.EndGroup();
-        AddStartNode();
-        AddFinishNode();
-        Repaint();
 
-    }
-    
+                if (allNodes[i].complete == true)
+                 {
+
+                     Handles.DrawLine(new Vector2(allNodes[i].rect.position.x + allNodes[i].rect.width / 5f, allNodes[i].rect.position.y + allNodes[i].rect.height / 5f),
+                     new Vector2(allNodes[i + 1].rect.position.x + allNodes[i + 1].rect.width / 5f, allNodes[i + 1].rect.position.y + allNodes[i + 1].rect.height / 5f));
+                 }
+
+               
+
+                 }
+
+             }
+
+
+            EndWindows();
+            GUI.EndGroup();
+            AddStartNode();
+            AddFinishNode();
+            Repaint();
+
+        }
+
     
 
     private void CheckMouse(Event currentE)
     {
+    
         if (!graphrect.Contains(currentE.mousePosition) || !(focusedWindow == this || mouseOverWindow == this))
             return;
 
@@ -140,14 +167,11 @@ public class QuestNodeWindow : EditorWindow
         Node overnode = null;
         for (int i = 0; i < allNodes.Count; i++)
         {
-            
-
-
-
                 allNodes[i].CheckMouse(Event.current, Graphpan);
-                if (allNodes[i].OverNode)
+
+            if (allNodes[i].OverNode)
                     overnode = allNodes[i];
-          
+
 
           
         }
@@ -156,15 +180,28 @@ public class QuestNodeWindow : EditorWindow
             var nod = new Vector2(_SelectedNode.rect.x + _SelectedNode.rect.width, _SelectedNode.rect.y + _SelectedNode.rect.height);
             if (currentE.button == 2 && currentE.type == EventType.MouseDown && graphrect.Contains(nod))
             {
+                
                 lining = true;
+
+              
+
             }
-           
-            if(lining == true)
+          
+            if (lining == true)
             {
-                _SelectedNode.selected = true;
+                P1 = _SelectedNode.rect.position;
+                
               
                 
             }
+            if ( lining == true && currentE.button == 2 && currentE.type == EventType.MouseDown )
+            {
+                Debug.Log("aca funciona");
+                P2 = _SelectedNode.rect.position;
+                _SelectedNode.selected = true;
+               
+            }
+
 
         }
         
@@ -217,7 +254,7 @@ public class QuestNodeWindow : EditorWindow
 
             CurrentName = "Finish Node";
             allNodes.Add(new Node(700, 0, 150, 200, CurrentName));
-            allNodes[allNodes.Count - 1].FinishNode = true;
+            allNodes[1].FinishNode = true;
             finish = true;
             Repaint();
         }
@@ -227,6 +264,7 @@ public class QuestNodeWindow : EditorWindow
         CurrentName = "Condition Node";
         allNodes.Add(new Node(0, 0, 150, 200, CurrentName));
         allNodes[allNodes.Count-1].ConditionNode = true;
+        
         Repaint();
     }
 
@@ -241,12 +279,9 @@ public class QuestNodeWindow : EditorWindow
     }
     private void Drawnode(int id)
     {
-       if(allNodes[id].FinishNode==true)
-        {
-            
-            allNodes[id] = allNodes[allNodes.Count-1];
-        }
-        
+      
+       
+      
         allNodes[id].checkQuest();
         
         if(allNodes[id].ConditionNode==true)

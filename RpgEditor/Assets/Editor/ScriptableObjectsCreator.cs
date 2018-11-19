@@ -15,4 +15,10 @@ public class ScriptableObjectsCreator
         var path = "Assets/Quests/Params Register/";
         ScriptableObjectUtility.CreateAsset<ParamsData>(path);
     }
+   
+    public static void CreateNodeWindow()
+    {
+        var path = "Assets/saveWindow/";
+        ScriptableObjectUtility.CreateAsset<Node>(path);
+    }
 }
