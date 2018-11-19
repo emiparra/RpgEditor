@@ -7,13 +7,18 @@ using System;
 public class Node:EditorWindow
 { 
     public Rect rect;
-    public string title;
+    public string  Ntitle;
     public bool isDragged;
     public bool isSelected;
     public string NodeName;
     public ConnectionPoint inPoint;
     public ConnectionPoint outPoint;
-
+    public bool Start = false;
+    public bool Finish = false;
+    public bool Condition = false;
+    public ParamsData Param;
+    public QuestData Quest;
+    public int space;
     public GUIStyle style;
     public GUIStyle defaultNodeStyle;
     public GUIStyle selectedNodeStyle;
@@ -25,7 +30,7 @@ public class Node:EditorWindow
     public Node(Vector2 position, float width, float height, GUIStyle nodeStyle, GUIStyle selectedStyle, GUIStyle inPointStyle, GUIStyle outPointStyle, Action<ConnectionPoint> OnClickInPoint, Action<ConnectionPoint> OnClickOutPoint, Action<Node> OnClickRemoveNode)
     {
        
-        rect = new Rect(position.x+10, position.y+10, width+100, height+100);
+        rect = new Rect(position.x+10, position.y+10, width+200, height+200);
         style = nodeStyle;
         inPoint = new ConnectionPoint(this, ConnectionPointType.In, inPointStyle, OnClickInPoint);
         outPoint = new ConnectionPoint(this, ConnectionPointType.Out, outPointStyle, OnClickOutPoint);
@@ -45,13 +50,65 @@ public class Node:EditorWindow
        
         inPoint.Draw();
         outPoint.Draw();
-        GUI.Box(rect, title, style);
+        GUI.Box(rect, Ntitle, style);
        // EditorGUI.DrawRect(rect, Color.black);
         GUI.BeginGroup(rect);
         BeginWindows();
-        
-        nn = (UnityEngine.Object)EditorGUILayout.ObjectField(nn, typeof(UnityEngine.Object), false);
-        
+
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.LabelField("Start:", GUILayout.Width(70));
+        Start = EditorGUILayout.Toggle(Start);
+        EditorGUILayout.EndHorizontal();
+
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.LabelField("Finish:", GUILayout.Width(70));
+        Finish = EditorGUILayout.Toggle(Finish);
+        EditorGUILayout.EndHorizontal();
+
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.LabelField("Condition:", GUILayout.Width(70));
+        Condition = EditorGUILayout.Toggle(Condition);
+        EditorGUILayout.EndHorizontal();
+       
+        if (Finish==false && Condition == false)
+        {
+           
+           Quest = (QuestData)EditorGUILayout.ObjectField(Quest, typeof(QuestData), false);
+        }
+        if (Start == true)
+        {
+            Debug.Log("soystart");
+            Finish = false;
+            Condition = false;
+        }
+        if (Condition == true)
+        {
+            Debug.Log("soycondition");
+            Start = false;
+            Finish = false;
+            EditorGUILayout.LabelField("Condicion:", GUILayout.Width(70));
+            Param = (ParamsData)EditorGUILayout.ObjectField(Param, typeof(ParamsData), false);
+            if (Param != null)
+            {
+                space = 150;
+                EditorGUILayout.LabelField("Know: " + Param.reqKnows, GUILayout.Width(space));
+
+                EditorGUILayout.LabelField("Item: " + Param.reqItem, GUILayout.Width(space));
+
+                EditorGUILayout.LabelField("Kills: " + Param.reqKills, GUILayout.Width(space));
+
+                EditorGUILayout.LabelField("Explore: " + Param.reqExplore, GUILayout.Width(space));
+
+                EditorGUILayout.LabelField("item: " + Param.reqItem, GUILayout.Width(space));
+            }
+        }
+        if (Finish == true)
+        {
+            Debug.Log("soyfinish");
+            Start = false;
+            Condition = false;
+        }
+
         EndWindows();
         GUI.EndGroup();
     }

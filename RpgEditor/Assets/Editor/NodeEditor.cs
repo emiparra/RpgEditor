@@ -25,6 +25,8 @@ public class NodeEditor:EditorWindow {
     {
         NodeEditor window = GetWindow<NodeEditor>();
         window.titleContent = new GUIContent("Node Editor");
+       
+
     }
 
     private void OnEnable()
@@ -46,10 +48,12 @@ public class NodeEditor:EditorWindow {
         outPointStyle.normal.background = EditorGUIUtility.Load("builtin skins/darkskin/images/btn right.png") as Texture2D;
         outPointStyle.active.background = EditorGUIUtility.Load("builtin skins/darkskin/images/btn right on.png") as Texture2D;
         outPointStyle.border = new RectOffset(4, 4, 12, 12);
+    
     }
 
     private void OnGUI()
     {
+       
         rect = new Rect(0,20,10000,10000);
         DrawGrid(20, 0.2f, Color.gray);
         DrawGrid(100, 0.4f, Color.gray);
@@ -64,7 +68,7 @@ public class NodeEditor:EditorWindow {
 
         ProcessNodeEvents(Event.current);
         ProcessEvents(Event.current);
-
+       
         if (GUI.changed) Repaint();
     }
 
@@ -99,13 +103,15 @@ public class NodeEditor:EditorWindow {
         {
             for (int i = 0; i < nodes.Count; i++)
             {
-                BeginWindows();
+                
                 nodes[i].Draw();
               
-                EndWindows();
+               
             }
         }
     }
+ 
+ 
 
     private void DrawConnections()
     {
@@ -207,6 +213,7 @@ public class NodeEditor:EditorWindow {
         GenericMenu genericMenu = new GenericMenu();
         genericMenu.AddItem(new GUIContent("Add node"), false, () => OnClickAddNode(mousePosition));
         genericMenu.ShowAsContext();
+       // genericMenu.AddItem(new GUIContent("Add Condition Node"),false,)
     }
 
     private void OnClickAddNode(Vector2 mousePosition)
