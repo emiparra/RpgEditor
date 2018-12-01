@@ -30,7 +30,7 @@ public class Node:EditorWindow
     public Node(Vector2 position, float width, float height, GUIStyle nodeStyle, GUIStyle selectedStyle, GUIStyle inPointStyle, GUIStyle outPointStyle, Action<ConnectionPoint> OnClickInPoint, Action<ConnectionPoint> OnClickOutPoint, Action<Node> OnClickRemoveNode)
     {
        
-        rect = new Rect(position.x+10, position.y+10, width+200, height+200);
+        rect = new Rect(position.x, position.y, 220,220);
         style = nodeStyle;
         inPoint = new ConnectionPoint(this, ConnectionPointType.In, inPointStyle, OnClickInPoint);
         outPoint = new ConnectionPoint(this, ConnectionPointType.Out, outPointStyle, OnClickOutPoint);
@@ -50,10 +50,10 @@ public class Node:EditorWindow
        
         inPoint.Draw();
         outPoint.Draw();
-        GUI.Box(rect, Ntitle, style);
+       // GUI.Box(rect, Ntitle, style);
        // EditorGUI.DrawRect(rect, Color.black);
-        GUI.BeginGroup(rect);
-        BeginWindows();
+       // GUI.BeginGroup(rect);
+      //  BeginWindows();
 
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("Start:", GUILayout.Width(70));
@@ -91,15 +91,15 @@ public class Node:EditorWindow
             if (Param != null)
             {
                 space = 150;
-                EditorGUILayout.LabelField("Know: " + Param.reqKnows, GUILayout.Width(space));
+                EditorGUILayout.LabelField("   Know: " + Param.reqKnows, GUILayout.Width(space));
 
-                EditorGUILayout.LabelField("Item: " + Param.reqItem, GUILayout.Width(space));
+                EditorGUILayout.LabelField("   Item: " + Param.reqItem, GUILayout.Width(space));
 
-                EditorGUILayout.LabelField("Kills: " + Param.reqKills, GUILayout.Width(space));
+                EditorGUILayout.LabelField("   Kills: " + Param.reqKills, GUILayout.Width(space));
 
-                EditorGUILayout.LabelField("Explore: " + Param.reqExplore, GUILayout.Width(space));
+                EditorGUILayout.LabelField("   Explore: " + Param.reqExplore, GUILayout.Width(space));
 
-                EditorGUILayout.LabelField("item: " + Param.reqItem, GUILayout.Width(space));
+                EditorGUILayout.LabelField("   item: " + Param.reqItem, GUILayout.Width(space));
             }
         }
         if (Finish == true)
@@ -109,8 +109,8 @@ public class Node:EditorWindow
             Condition = false;
         }
 
-        EndWindows();
-        GUI.EndGroup();
+        //EndWindows();
+       // GUI.EndGroup();
     }
 
     public bool ProcessEvents(Event e)

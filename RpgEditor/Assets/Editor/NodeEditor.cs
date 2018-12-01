@@ -57,11 +57,11 @@ public class NodeEditor:EditorWindow {
         rect = new Rect(0,20,10000,10000);
         DrawGrid(20, 0.2f, Color.gray);
         DrawGrid(100, 0.4f, Color.gray);
-      
-    
+
+        BeginWindows();
         DrawNodes();
-      
-     
+        EndWindows();
+
         DrawConnections();
 
         DrawConnectionLine(Event.current);
@@ -104,11 +104,14 @@ public class NodeEditor:EditorWindow {
             for (int i = 0; i < nodes.Count; i++)
             {
                 
-                nodes[i].Draw();
-              
-               
+                GUI.Window(i, nodes[i].rect, DrawMyNode, "");
+
             }
         }
+    }
+    private void DrawMyNode(int id)
+    {
+        nodes[id].Draw();
     }
  
  
@@ -125,17 +128,19 @@ public class NodeEditor:EditorWindow {
     }
     private void DrawConnectionLine(Event e)
     {
+        
         if (selectedInPoint != null && selectedOutPoint == null)
         {
             Handles.DrawBezier(
-                selectedInPoint.rect.center,
+                selectedInPoint.node.rect.center,
                 e.mousePosition,
-                selectedInPoint.rect.center + Vector2.left * 50f,
+                selectedInPoint.node.rect.center + Vector2.left * 50f,
                 e.mousePosition - Vector2.left * 50f,
                 Color.white,
                 null,
                 2f
             );
+          
 
             GUI.changed = true;
         }
@@ -143,9 +148,9 @@ public class NodeEditor:EditorWindow {
         if (selectedOutPoint != null && selectedInPoint == null)
         {
             Handles.DrawBezier(
-                selectedOutPoint.rect.center,
+                selectedOutPoint.node.rect.center,
                 e.mousePosition,
-                selectedOutPoint.rect.center - Vector2.left * 50f,
+                selectedOutPoint.node.rect.center - Vector2.left * 50f,
                 e.mousePosition + Vector2.left * 50f,
                 Color.white,
                 null,

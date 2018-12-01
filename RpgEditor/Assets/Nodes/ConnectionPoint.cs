@@ -28,16 +28,17 @@ public class ConnectionPoint
 
     public void Draw()
     {
-        rect.y = node.rect.y + (node.rect.height * 0.5f) - rect.height * 0.5f;
+      
+        rect.y = (node.rect.height * 0.5f) - rect.height * 0.5f + 100;
 
         switch (type)
         {
             case ConnectionPointType.In:
-                rect.x = node.rect.x - rect.width + 10f;
+                rect.x = node.rect.width - node.rect.width ;
                 break;
 
             case ConnectionPointType.Out:
-                rect.x = node.rect.x + node.rect.width - 10f;
+                rect.x = node.rect.width - 15f;
                 break;
         }
 
