@@ -69,7 +69,7 @@ public class NodeEditor:EditorWindow {
         ProcessNodeEvents(Event.current);
         ProcessEvents(Event.current);
 
-        Herocheck();
+        //Herocheck();
 
         if (GUI.changed) Repaint();
     }
@@ -338,16 +338,20 @@ public class NodeEditor:EditorWindow {
                 {
                     QuestOrder.Add(nodes[i]);
                 }
+               
+
+
+
+            }
+            for (int i = 0; i < QuestOrder.Count; i++)
+            {
                 if (QuestOrder != null)
                 {
-                    if (QuestOrder.Contains(nodes[i])  && QuestOrder[i].connected == false && QuestOrder[i].Start==false)
+                    if (QuestOrder.Contains(nodes[i]) && QuestOrder[i].connected == false && QuestOrder[i].Start == false)
                     {
                         QuestOrder.Remove(nodes[i]);
                     }
                 }
-
-
-
             }
 
         }
@@ -358,4 +362,6 @@ public class NodeEditor:EditorWindow {
     
        
     }
+
+
 }

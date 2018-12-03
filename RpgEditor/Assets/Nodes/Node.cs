@@ -23,6 +23,14 @@ public class Node:EditorWindow
     public GUIStyle style;
     public GUIStyle defaultNodeStyle;
     public GUIStyle selectedNodeStyle;
+    public int level;
+    public string know;
+    public string killed;
+    public string item;
+    public string explore;
+    public bool currentQuest;
+    public List<Node> next = new List<Node>();
+    public List<Node> previous = new List<Node>();
 
     public Action<Node> OnRemoveNode;
     public UnityEngine.Object nn;
@@ -71,7 +79,9 @@ public class Node:EditorWindow
         if (Finish==false && Condition == false)
         {
            
-           Quest = (QuestData)EditorGUILayout.ObjectField(Quest, typeof(QuestData), false);
+           Quest = (QuestData)EditorGUILayout.ObjectField(Quest, typeof(QuestData), true);
+            Param = (ParamsData)EditorGUILayout.ObjectField(Param, typeof(ParamsData), true);
+            currentQuest = EditorGUILayout.Toggle("Current Quest", currentQuest);
         }
         if (Start == true)
         {
@@ -86,20 +96,13 @@ public class Node:EditorWindow
             Start = false;
             Finish = false;
             EditorGUILayout.LabelField("Condicion:", GUILayout.Width(70));
-            Param = (ParamsData)EditorGUILayout.ObjectField(Param, typeof(ParamsData), false);
-            if (Param != null)
-            {
-                space = 150;
-                EditorGUILayout.LabelField("   Know: " + Param.reqKnows, GUILayout.Width(space));
+            level = EditorGUILayout.IntField("Level", level);
+            killed = EditorGUILayout.TextField("Killed", killed);
+            item = EditorGUILayout.TextField("Item", item);
+            explore = EditorGUILayout.TextField("Explored", explore);
+            know = EditorGUILayout.TextField("Know", know);
+            if (GUILayout.Button("CheckParams")) CheckParams();
 
-                EditorGUILayout.LabelField("   Item: " + Param.reqItem, GUILayout.Width(space));
-
-                EditorGUILayout.LabelField("   Kills: " + Param.reqKills, GUILayout.Width(space));
-
-                EditorGUILayout.LabelField("   Explore: " + Param.reqExplore, GUILayout.Width(space));
-
-                EditorGUILayout.LabelField("   item: " + Param.reqItem, GUILayout.Width(space));
-            }
         }
         if (Finish == true)
         {
@@ -169,6 +172,15 @@ public class Node:EditorWindow
         }
     }
 
+
+   
+    public void CheckParams()
+    {
+        foreach (var item in previous)
+        {
+            Debug.Log(item.Param);
+        }
+    }
 
 
 

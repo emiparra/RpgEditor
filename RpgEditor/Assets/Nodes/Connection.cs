@@ -24,6 +24,9 @@ public class Connection
             null,
             2f
         );
+
+        outPoint.node.next.Add(inPoint.node);
+        inPoint.node.previous.Add(outPoint.node);
         
         if (Handles.Button((inPoint.node.rect.center + outPoint.node.rect.center) * 0.5f, Quaternion.identity, 4, 8, Handles.RectangleHandleCap))
         {
