@@ -7,6 +7,7 @@ using System;
 public class Node:EditorWindow
 { 
     public Rect rect;
+    public bool connected=false;
     public string  Ntitle;
     public bool isDragged;
     public bool isSelected;
@@ -50,10 +51,7 @@ public class Node:EditorWindow
        
         inPoint.Draw();
         outPoint.Draw();
-       // GUI.Box(rect, Ntitle, style);
-       // EditorGUI.DrawRect(rect, Color.black);
-       // GUI.BeginGroup(rect);
-      //  BeginWindows();
+    
 
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("Start:", GUILayout.Width(70));
@@ -77,13 +75,14 @@ public class Node:EditorWindow
         }
         if (Start == true)
         {
-            Debug.Log("soystart");
+          
             Finish = false;
             Condition = false;
+           
         }
         if (Condition == true)
         {
-            Debug.Log("soycondition");
+         
             Start = false;
             Finish = false;
             EditorGUILayout.LabelField("Condicion:", GUILayout.Width(70));
@@ -104,13 +103,12 @@ public class Node:EditorWindow
         }
         if (Finish == true)
         {
-            Debug.Log("soyfinish");
+           
             Start = false;
             Condition = false;
         }
 
-        //EndWindows();
-       // GUI.EndGroup();
+       
     }
 
     public bool ProcessEvents(Event e)

@@ -12,7 +12,7 @@ public class NodeEditor:EditorWindow {
     private GUIStyle nodeStyle;
     private GUIStyle inPointStyle;
     private GUIStyle outPointStyle;
-
+    private List<Node> QuestOrder;
     private ConnectionPoint selectedInPoint;
     private ConnectionPoint selectedOutPoint;
     private Rect rect;
@@ -68,7 +68,9 @@ public class NodeEditor:EditorWindow {
 
         ProcessNodeEvents(Event.current);
         ProcessEvents(Event.current);
-       
+
+        Herocheck();
+
         if (GUI.changed) Repaint();
     }
 
@@ -269,6 +271,9 @@ public class NodeEditor:EditorWindow {
     private void OnClickRemoveConnection(Connection connection)
     {
         connections.Remove(connection);
+        QuestOrder.Remove(connection.outPoint.node);
+        connection.inPoint.node.connected = false;
+        Debug.Log(QuestOrder.Count);
     }
 
     private void CreateConnection()
@@ -279,6 +284,8 @@ public class NodeEditor:EditorWindow {
         }
 
         connections.Add(new Connection(selectedInPoint, selectedOutPoint, OnClickRemoveConnection));
+        selectedInPoint.node.connected = true;
+       
     }
 
     private void ClearConnectionSelection()
@@ -308,7 +315,47 @@ public class NodeEditor:EditorWindow {
 
             connectionsToRemove = null;
         }
-
+        
         nodes.Remove(node);
+        QuestOrder.Remove(node);
+        Debug.Log(QuestOrder.Count);
+
+    }
+    private void Herocheck()
+    {
+        QuestOrder = new List<Node>();
+        if (nodes!=null)
+        {
+            for (int i = 0; i < nodes.Count; i++)
+            {
+                if(nodes[i].Start==true && QuestOrder.Contains(nodes[i]) == false)
+                {
+                   
+                    QuestOrder.Add(nodes[i]);
+                }
+
+                if(nodes[i].connected==true && QuestOrder.Contains(nodes[i])==false && nodes[i].Start==false)
+                {
+                    QuestOrder.Add(nodes[i]);
+                }
+                if (QuestOrder != null)
+                {
+                    if (QuestOrder.Contains(nodes[i])  && QuestOrder[i].connected == false && QuestOrder[i].Start==false)
+                    {
+                        QuestOrder.Remove(nodes[i]);
+                    }
+                }
+
+
+
+            }
+
+        }
+        if(QuestOrder!=null)
+        {
+            Debug.Log(QuestOrder.Count);
+        }
+    
+       
     }
 }
