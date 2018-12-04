@@ -24,9 +24,16 @@ public class Connection
             null,
             2f
         );
-
-        outPoint.node.next.Add(inPoint.node);
-        inPoint.node.previous.Add(outPoint.node);
+        if(outPoint.node.next.Contains(inPoint.node) == false)
+        {
+            outPoint.node.next.Add(inPoint.node);
+        }
+        if(inPoint.node.previous.Contains(outPoint.node) == false)
+        {
+            inPoint.node.previous.Add(outPoint.node);
+        }
+        
+        
         
         if (Handles.Button((inPoint.node.rect.center + outPoint.node.rect.center) * 0.5f, Quaternion.identity, 4, 8, Handles.RectangleHandleCap))
         {

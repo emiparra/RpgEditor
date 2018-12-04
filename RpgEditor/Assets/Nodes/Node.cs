@@ -101,7 +101,7 @@ public class Node:EditorWindow
             item = EditorGUILayout.TextField("Item", item);
             explore = EditorGUILayout.TextField("Explored", explore);
             know = EditorGUILayout.TextField("Know", know);
-            if (GUILayout.Button("CheckParams")) CheckParams();
+            if (GUILayout.Button("CheckParams")) CheckParams(level,killed,item,explore,know);
 
         }
         if (Finish == true)
@@ -109,6 +109,7 @@ public class Node:EditorWindow
            
             Start = false;
             Condition = false;
+            Param = (ParamsData)EditorGUILayout.ObjectField(Param, typeof(ParamsData), true);
         }
 
        
@@ -174,12 +175,30 @@ public class Node:EditorWindow
 
 
    
-    public void CheckParams()
+    public void CheckParams(int l,string k, string it, string ex,string kn)
     {
-        foreach (var item in previous)
+
+        foreach (var i in next)
         {
-            Debug.Log(item.Param);
+            
+            if(i.Param.reqItem == it && i.Param.reqExplore == ex && i.Param.reqKills == k && i.Param.reqKnows == kn && i.Param.reqLvl == l)
+            {
+                
+                foreach (var t in previous)
+                {
+                    if (t.currentQuest == true)
+                    {
+                        t.currentQuest = false;
+                    }
+                }
+
+                i.currentQuest = true;
+
+            }
         }
+
+
+        
     }
 
 
